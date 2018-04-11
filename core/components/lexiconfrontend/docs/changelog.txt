@@ -1,0 +1,10 @@
+Changelog for lexiconFrontend.
+
+lexiconFrontend 1.0.1
+==============
+- fix pages on lexicon list CMP
+- fix names of lexicon variables
+
+lexiconFrontend 1.0.0
+==============
+- Initial release.

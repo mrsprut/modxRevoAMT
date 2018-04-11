@@ -1,0 +1,625 @@
+<?php return array (
+  'unique_key' => 'category',
+  'preserve_keys' => false,
+  'update_object' => true,
+  'related_objects' => 
+  array (
+    'Snippets' => 
+    array (
+      '0a5e34763d81b344aef8c866703325cd' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'name',
+        'class' => 'modSnippet',
+        'object' => '{"id":0,"source":1,"property_preprocess":0,"name":"formContacts","description":"","editor_type":0,"category":0,"cache_type":0,"snippet":"function validateEmail($email){\\r\\n    $pattern = \\"\\/^[^@]{1,64}\\\\@[^\\\\@]{1,255}$\\/\\";\\r\\n    $condition = @preg_match($pattern, $email);\\r\\n    if (!$condition) {\\r\\n        return true;\\r\\n    }\\r\\n\\r\\n    $email_array = explode(\\"@\\", $email);\\r\\n    $local_array = explode(\\".\\", $email_array[0]);\\r\\n    for ($i = 0; $i < sizeof($local_array); $i++) {\\r\\n        $pattern = \\"\\/^(([A-Za-z0-9!#$%&\'*+\\\\\\/=?^_`{|}~-][A-Za-z0-9!#$%&\'*+\\\\\\/=?^_`{|}~\\\\.-]{0,63})|(\\\\\\"[^(\\\\\\\\|\\\\\\")]{0,62}\\\\\\"))$\\/\\";\\r\\n        $condition = @preg_match($pattern,$local_array[$i]);\\r\\n        if (!$condition) {\\r\\n            return true;\\r\\n        }\\r\\n    }\\r\\n\\r\\n    $pattern = \\"^\\\\[?[0-9\\\\.]+\\\\]?$\\";\\r\\n    $condition = @preg_match($pattern, $email_array[1]);\\r\\n    if (!$condition) {\\r\\n        $domain_array = explode(\\".\\", $email_array[1]);\\r\\n        if (sizeof($domain_array) < 2) {\\r\\n            return true;\\r\\n        }\\r\\n        for ($i = 0; $i < sizeof($domain_array); $i++) {\\r\\n            $pattern = \\"\\/^(([A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9])|([A-Za-z0-9]+))$\\/\\";\\r\\n            $condition = @preg_match($pattern,$domain_array[$i]);\\r\\n            if (!$condition) {\\r\\n                return true;\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n    return false;\\r\\n}\\r\\n\\r\\n$properties =& $scriptProperties;\\r\\n\\r\\n$properties[\'fields\'] = !empty($properties[\'fields\']) ? explode(\',\',$properties[\'fields\']) : array(\'name\',\'email\',\'message\');\\r\\n$properties[\'validate\'] = !empty($properties[\'validate\']) ? explode(\',\',$properties[\'validate\']) : array(\'name\',\'email\',\'message\');\\r\\n$properties[\'emailTo\'] = !empty($properties[\'emailTo\']) ? $properties[\'emailTo\'] : $modx->getOption(\'emailsender\');;\\r\\n$properties[\'subject\'] = !empty($properties[\'subject\']) ? $properties[\'subject\'] : \'Contact Form\';\\r\\n$properties[\'tpl\'] = !empty($properties[\'tpl\']) ? $properties[\'tpl\'] : \'emailContacts\';\\r\\n\\r\\n$fields = array();\\r\\nforeach($properties[\'fields\'] as $fieldName) {\\r\\n    $fields[$fieldName] = isset($_POST[$fieldName]) ? $_POST[$fieldName] : null;\\r\\n}\\r\\n\\r\\n$errors = array();\\r\\n$errorCheck = false;\\r\\nforeach($properties[\'validate\'] as $fieldValidate){\\r\\n    if($fieldValidate == \'email\' && isset($fields[$fieldValidate]) && !empty($fields[$fieldValidate])) {\\r\\n        $errors[$fieldValidate] = validateEmail($fields[$fieldValidate]);\\r\\n        if($errors[$fieldValidate]) $errorCheck = true;\\r\\n    }\\r\\n    if(!$fields[$fieldValidate]) {\\r\\n        $errors[$fieldValidate] = true;\\r\\n        $errorCheck = true;\\r\\n    }\\r\\n}\\r\\n\\r\\n$output = array(\'success\'=>true);\\r\\n\\r\\nif($errorCheck) {\\r\\n    $output = array(\\r\\n        \'success\'   =>  false,\\r\\n        \'errors\'    =>  $errors\\r\\n    );\\r\\n} else {\\r\\n\\r\\n    if(!is_null($properties[\'emailTo\'])) {\\r\\n        $message = $modx->getChunk($properties[\'tpl\'], $fields);\\r\\n\\r\\n        $modx->getService(\'mail\', \'mail.modPHPMailer\');\\r\\n        $modx->mail->set(modMail::MAIL_BODY,$message);\\r\\n        $modx->mail->set(modMail::MAIL_FROM,$modx->getOption(\'emailsender\'));\\r\\n        $modx->mail->set(modMail::MAIL_FROM_NAME,$modx->getOption(\'site_name\'));\\r\\n        $modx->mail->set(modMail::MAIL_SENDER,$modx->getOption(\'site_name\'));\\r\\n        $modx->mail->set(modMail::MAIL_SUBJECT,$properties[\'subject\']);\\r\\n        $modx->mail->address(\'to\',$properties[\'emailTo\']);\\r\\n        $modx->mail->setHTML(true);\\r\\n        if (!$modx->mail->send()) {\\r\\n            $modx->log(modX::LOG_LEVEL_ERROR,\'An error occurred while trying to send the email: \'.$err);\\r\\n        }\\r\\n        $modx->mail->reset();\\r\\n    }\\r\\n}\\r\\n\\r\\nreturn json_encode($output);","locked":0,"properties":"a:5:{s:3:\\"tpl\\";a:7:{s:4:\\"name\\";s:3:\\"tpl\\";s:4:\\"desc\\";s:18:\\"basetheme_prop_tpl\\";s:4:\\"type\\";s:9:\\"textfield\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";s:13:\\"emailContacts\\";s:7:\\"lexicon\\";s:20:\\"basetheme:properties\\";s:4:\\"area\\";s:0:\\"\\";}s:6:\\"fields\\";a:7:{s:4:\\"name\\";s:6:\\"fields\\";s:4:\\"desc\\";s:21:\\"basetheme_prop_fields\\";s:4:\\"type\\";s:9:\\"textfield\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";s:18:\\"name,email,message\\";s:7:\\"lexicon\\";s:20:\\"basetheme:properties\\";s:4:\\"area\\";s:0:\\"\\";}s:8:\\"validate\\";a:7:{s:4:\\"name\\";s:8:\\"validate\\";s:4:\\"desc\\";s:23:\\"basetheme_prop_validate\\";s:4:\\"type\\";s:9:\\"textfield\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";s:18:\\"name,email,message\\";s:7:\\"lexicon\\";s:20:\\"basetheme:properties\\";s:4:\\"area\\";s:0:\\"\\";}s:7:\\"emailTo\\";a:7:{s:4:\\"name\\";s:7:\\"emailTo\\";s:4:\\"desc\\";s:22:\\"basetheme_prop_emailTo\\";s:4:\\"type\\";s:9:\\"textfield\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";s:0:\\"\\";s:7:\\"lexicon\\";s:20:\\"basetheme:properties\\";s:4:\\"area\\";s:0:\\"\\";}s:7:\\"subject\\";a:7:{s:4:\\"name\\";s:7:\\"subject\\";s:4:\\"desc\\";s:22:\\"basetheme_prop_subject\\";s:4:\\"type\\";s:9:\\"textfield\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";s:17:\\"Message from site\\";s:7:\\"lexicon\\";s:20:\\"basetheme:properties\\";s:4:\\"area\\";s:0:\\"\\";}}","moduleguid":"","static":1,"static_file":"assets\\/basetheme-elements\\/snippets\\/formContacts.php","content":"function validateEmail($email){\\r\\n    $pattern = \\"\\/^[^@]{1,64}\\\\@[^\\\\@]{1,255}$\\/\\";\\r\\n    $condition = @preg_match($pattern, $email);\\r\\n    if (!$condition) {\\r\\n        return true;\\r\\n    }\\r\\n\\r\\n    $email_array = explode(\\"@\\", $email);\\r\\n    $local_array = explode(\\".\\", $email_array[0]);\\r\\n    for ($i = 0; $i < sizeof($local_array); $i++) {\\r\\n        $pattern = \\"\\/^(([A-Za-z0-9!#$%&\'*+\\\\\\/=?^_`{|}~-][A-Za-z0-9!#$%&\'*+\\\\\\/=?^_`{|}~\\\\.-]{0,63})|(\\\\\\"[^(\\\\\\\\|\\\\\\")]{0,62}\\\\\\"))$\\/\\";\\r\\n        $condition = @preg_match($pattern,$local_array[$i]);\\r\\n        if (!$condition) {\\r\\n            return true;\\r\\n        }\\r\\n    }\\r\\n\\r\\n    $pattern = \\"^\\\\[?[0-9\\\\.]+\\\\]?$\\";\\r\\n    $condition = @preg_match($pattern, $email_array[1]);\\r\\n    if (!$condition) {\\r\\n        $domain_array = explode(\\".\\", $email_array[1]);\\r\\n        if (sizeof($domain_array) < 2) {\\r\\n            return true;\\r\\n        }\\r\\n        for ($i = 0; $i < sizeof($domain_array); $i++) {\\r\\n            $pattern = \\"\\/^(([A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9])|([A-Za-z0-9]+))$\\/\\";\\r\\n            $condition = @preg_match($pattern,$domain_array[$i]);\\r\\n            if (!$condition) {\\r\\n                return true;\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n    return false;\\r\\n}\\r\\n\\r\\n$properties =& $scriptProperties;\\r\\n\\r\\n$properties[\'fields\'] = !empty($properties[\'fields\']) ? explode(\',\',$properties[\'fields\']) : array(\'name\',\'email\',\'message\');\\r\\n$properties[\'validate\'] = !empty($properties[\'validate\']) ? explode(\',\',$properties[\'validate\']) : array(\'name\',\'email\',\'message\');\\r\\n$properties[\'emailTo\'] = !empty($properties[\'emailTo\']) ? $properties[\'emailTo\'] : $modx->getOption(\'emailsender\');;\\r\\n$properties[\'subject\'] = !empty($properties[\'subject\']) ? $properties[\'subject\'] : \'Contact Form\';\\r\\n$properties[\'tpl\'] = !empty($properties[\'tpl\']) ? $properties[\'tpl\'] : \'emailContacts\';\\r\\n\\r\\n$fields = array();\\r\\nforeach($properties[\'fields\'] as $fieldName) {\\r\\n    $fields[$fieldName] = isset($_POST[$fieldName]) ? $_POST[$fieldName] : null;\\r\\n}\\r\\n\\r\\n$errors = array();\\r\\n$errorCheck = false;\\r\\nforeach($properties[\'validate\'] as $fieldValidate){\\r\\n    if($fieldValidate == \'email\' && isset($fields[$fieldValidate]) && !empty($fields[$fieldValidate])) {\\r\\n        $errors[$fieldValidate] = validateEmail($fields[$fieldValidate]);\\r\\n        if($errors[$fieldValidate]) $errorCheck = true;\\r\\n    }\\r\\n    if(!$fields[$fieldValidate]) {\\r\\n        $errors[$fieldValidate] = true;\\r\\n        $errorCheck = true;\\r\\n    }\\r\\n}\\r\\n\\r\\n$output = array(\'success\'=>true);\\r\\n\\r\\nif($errorCheck) {\\r\\n    $output = array(\\r\\n        \'success\'   =>  false,\\r\\n        \'errors\'    =>  $errors\\r\\n    );\\r\\n} else {\\r\\n\\r\\n    if(!is_null($properties[\'emailTo\'])) {\\r\\n        $message = $modx->getChunk($properties[\'tpl\'], $fields);\\r\\n\\r\\n        $modx->getService(\'mail\', \'mail.modPHPMailer\');\\r\\n        $modx->mail->set(modMail::MAIL_BODY,$message);\\r\\n        $modx->mail->set(modMail::MAIL_FROM,$modx->getOption(\'emailsender\'));\\r\\n        $modx->mail->set(modMail::MAIL_FROM_NAME,$modx->getOption(\'site_name\'));\\r\\n        $modx->mail->set(modMail::MAIL_SENDER,$modx->getOption(\'site_name\'));\\r\\n        $modx->mail->set(modMail::MAIL_SUBJECT,$properties[\'subject\']);\\r\\n        $modx->mail->address(\'to\',$properties[\'emailTo\']);\\r\\n        $modx->mail->setHTML(true);\\r\\n        if (!$modx->mail->send()) {\\r\\n            $modx->log(modX::LOG_LEVEL_ERROR,\'An error occurred while trying to send the email: \'.$err);\\r\\n        }\\r\\n        $modx->mail->reset();\\r\\n    }\\r\\n}\\r\\n\\r\\nreturn json_encode($output);"}',
+        'guid' => 'ad81f45090b3cb89c379e28b68016ed8',
+        'native_key' => 0,
+        'signature' => '7a965b129cc1657bcc4376d07a31f552',
+      ),
+      'eeb9d6558be1183cb3283086258a6bdc' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'name',
+        'class' => 'modSnippet',
+        'object' => '{"id":0,"source":1,"property_preprocess":0,"name":"formSubscribe","description":"","editor_type":0,"category":0,"cache_type":0,"snippet":"\\/**\\r\\n * Description of uniApi\\r\\n *\\r\\n * @author ors\\r\\n *\\/\\r\\nclass uniApi {\\r\\n\\r\\n    public $api_key;\\r\\n    public $lang = \'ru\';\\r\\n    private $langlist = array(\'ru\');\\r\\n\\r\\n    \\/**\\r\\n     * \\u0421\\u043e\\u0437\\u0434\\u0430\\u0435\\u043c \\u043e\\u0431\\u044a\\u0435\\u043a\\u0442 \\u0441 \\u0440\\u0430\\u0437\\u0440\\u0435\\u0448\\u0435\\u043d\\u043d\\u044b\\u043c\\u0438 \\u044f\\u0437\\u044b\\u043a\\u0430\\u043c\\u0438\\r\\n     * @param string $key \\u043a\\u043b\\u044e\\u0447 \\u0434\\u043e\\u0441\\u0442\\u0443\\u043f\\u0430 \\u043a API\\r\\n     * @param string $lang \\u044f\\u0437\\u044b\\u043a \\u0441\\u043e\\u043e\\u0431\\u0449\\u0435\\u043d\\u0438\\u0439 \\u0441\\u0435\\u0440\\u0432\\u0435\\u0440\\u0430 API, \\u0432 \\u0434\\u0430\\u043d\\u043d\\u044b\\u0439 \\u043c\\u043e\\u043c\\u0435\\u043d\\u0442 \\u043f\\u043e\\u0434\\u0434\\u0435\\u0440\\u0436\\u0438\\u0432\\u0430\\u0435\\u0442\\u0441\\u044f ru, en, it\\r\\n     *\\/\\r\\n    public function __construct($api_key, $lang = \'ru\') {\\r\\n        $this->api_key = $api_key;\\r\\n        if (in_array($lang, $this->langlist))\\r\\n            $this->lang = $lang; \\r\\n    } \\r\\n\\r\\n    \\/**\\r\\n     * \\u041e\\u0442\\u043f\\u0440\\u0430\\u0432\\u043a\\u0430 \\u0437\\u0430\\u043f\\u0440\\u043e\\u0441\\u043e\\u0432 \\u0438 \\u043e\\u0431\\u0440\\u0430\\u0431\\u043e\\u0442\\u043a\\u0430 \\u043e\\u0448\\u0438\\u0431\\u043e\\u043a\\r\\n     * @param string $method \\u043d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u043c\\u0435\\u0442\\u043e\\u0434\\u0430\\r\\n     * @param array $args \\u0430\\u0440\\u0433\\u0443\\u043c\\u0435\\u043d\\u0442\\u044b \\u043c\\u0435\\u0442\\u043e\\u0434\\u0430, \\u0441\\u0432\\u043e\\u0438 \\u0434\\u043b\\u044f \\u043a\\u0430\\u0436\\u0434\\u043e\\u0433\\u043e \\u043c\\u0435\\u0442\\u043e\\u0434\\u0430\\r\\n     *\\/\\r\\n    private function uniRequest($method, $args) {\\r\\n        $post_array = array_merge(array(\\r\\n            \'api_key\' => $this->api_key,\\r\\n            \'lang\' => $this->lang,\\r\\n        ),$args);\\r\\n\\r\\n        $ch = curl_init();\\r\\n        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\\r\\n        curl_setopt($ch, CURLOPT_POST, 1);\\r\\n        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_array);\\r\\n        curl_setopt($ch, CURLOPT_TIMEOUT, 10);\\r\\n        curl_setopt($ch, CURLOPT_URL,\\r\\n                \'http:\\/\\/api.unisender.com\\/ru\\/api\\/\'.$method.\'?format=json\');\\r\\n        $result = curl_exec($ch);\\r\\n\\r\\n        if ($result) {\\r\\n            \\/\\/ \\u0420\\u0430\\u0441\\u043a\\u043e\\u0434\\u0438\\u0440\\u0443\\u0435\\u043c \\u043e\\u0442\\u0432\\u0435\\u0442 API-\\u0441\\u0435\\u0440\\u0432\\u0435\\u0440\\u0430\\r\\n            $jsonObj = json_decode($result);\\r\\n\\r\\n            if (null === $jsonObj) {\\r\\n                \\/\\/ \\u041e\\u0448\\u0438\\u0431\\u043a\\u0430 \\u0432 \\u043f\\u043e\\u043b\\u0443\\u0447\\u0435\\u043d\\u043d\\u043e\\u043c \\u043e\\u0442\\u0432\\u0435\\u0442\\u0435\\r\\n                echo \\"Invalid JSON\\";\\r\\n            } elseif (!empty($jsonObj->error)) {\\r\\n                \\/\\/ \\u041e\\u0448\\u0438\\u0431\\u043a\\u0430 \\u0434\\u043e\\u0431\\u0430\\u0432\\u043b\\u0435\\u043d\\u0438\\u044f \\u043f\\u043e\\u043b\\u044c\\u0437\\u043e\\u0432\\u0430\\u0442\\u0435\\u043b\\u044f\\r\\n                echo \\"An error occured: \\" . $jsonObj->error . \\"(code: \\" . $jsonObj->code . \\")\\";\\r\\n            }\\r\\n        } else {\\r\\n            \\/\\/ \\u041e\\u0448\\u0438\\u0431\\u043a\\u0430 \\u0441\\u043e\\u0435\\u0434\\u0438\\u043d\\u0435\\u043d\\u0438\\u044f \\u0441 API-\\u0441\\u0435\\u0440\\u0432\\u0435\\u0440\\u043e\\u043c\\r\\n            echo \\"API access error\\";\\r\\n        }\\r\\n        return $jsonObj->result;\\r\\n    }\\r\\n    \\/**\\r\\n    * \\u042d\\u0442\\u043e\\u0442 \\u043c\\u0435\\u0442\\u043e\\u0434 \\u0434\\u043e\\u0431\\u0430\\u0432\\u043b\\u044f\\u0435\\u0442 \\u043a\\u043e\\u043d\\u0442\\u0430\\u043a\\u0442\\u044b (e-mail \\u0430\\u0434\\u0440\\u0435\\u0441 \\u0438\\/\\u0438\\u043b\\u0438 \\u043c\\u043e\\u0431\\u0438\\u043b\\u044c\\u043d\\u044b\\u0439 \\u0442\\u0435\\u043b\\u0435\\u0444\\u043e\\u043d) \\u043f\\u043e\\u0434\\u043f\\u0438\\u0441\\u0447\\u0438\\u043a\\u0430 \\u0432 \\u043e\\u0434\\u0438\\u043d \\u0438\\u043b\\u0438 \\u043d\\u0435\\u0441\\u043a\\u043e\\u043b\\u044c\\u043a\\u043e \\u0441\\u043f\\u0438\\u0441\\u043a\\u043e\\u0432, \\u0430 \\u0442\\u0430\\u043a\\u0436\\u0435 \\u043f\\u043e\\u0437\\u0432\\u043e\\u043b\\u044f\\u0435\\u0442 \\u0434\\u043e\\u0431\\u0430\\u0432\\u0438\\u0442\\u044c\\/\\u043f\\u043e\\u043c\\u0435\\u043d\\u044f\\u0442\\u044c \\u0437\\u043d\\u0430\\u0447\\u0435\\u043d\\u0438\\u044f \\u0434\\u043e\\u043f\\u043e\\u043b\\u043d\\u0438\\u0442\\u0435\\u043b\\u044c\\u043d\\u044b\\u0445 \\u043f\\u043e\\u043b\\u0435\\u0439 \\u0438 \\u043c\\u0435\\u0442\\u043e\\u043a.\\r\\n    * @param <type> $email\\r\\n    * @param <type> $list \\u041f\\u0435\\u0440\\u0435\\u0447\\u0438\\u0441\\u043b\\u0435\\u043d\\u043d\\u044b\\u0435 \\u0447\\u0435\\u0440\\u0435\\u0437 \\u0437\\u0430\\u043f\\u044f\\u0442\\u0443\\u044e \\u043a\\u043e\\u0434\\u044b \\u0441\\u043f\\u0438\\u0441\\u043a\\u043e\\u0432, \\u0432 \\u043a\\u043e\\u0442\\u043e\\u0440\\u044b\\u0435 \\u043d\\u0430\\u0434\\u043e \\u0434\\u043e\\u0431\\u0430\\u0432\\u0438\\u0442\\u044c \\u043f\\u043e\\u0434\\u043f\\u0438\\u0441\\u0447\\u0438\\u043a\\u0430.\\r\\n    * @param <type> $phone \\u0412 \\u0441\\u043b\\u0443\\u0447\\u0430\\u0435 \\u043d\\u0430\\u043b\\u0438\\u0447\\u0438\\u044f \\u0438 e-mail, \\u0438 \\u0442\\u0435\\u043b\\u0435\\u0444\\u043e\\u043d\\u0430, \\u043f\\u043e\\u0434\\u043f\\u0438\\u0441\\u0447\\u0438\\u043a \\u0431\\u0443\\u0434\\u0435\\u0442 \\u0432\\u043a\\u043b\\u044e\\u0447\\u0451\\u043d \\u0438 \\u0432 e-mail, \\u0438 \\u0432 SMS \\u0441\\u043f\\u0438\\u0441\\u043a\\u0438 \\u0440\\u0430\\u0441\\u0441\\u044b\\u043b\\u043a\\u0438.\\r\\n    * @param <type> $ip IP-\\u0430\\u0434\\u0440\\u0435\\u0441 \\u043f\\u043e\\u0434\\u043f\\u0438\\u0441\\u0447\\u0438\\u043a\\u0430\\r\\n    * @param <type> $first_name\\r\\n    * @param <type> $last_name \\r\\n    *\\/\\r\\n    public function subscribe($email, $list, $phone=NULL, $ip=NULL, $first_name=NULL, $last_name=NULL) {\\r\\n        $args = array (\\r\\n          \'list_ids\' => $list,\\r\\n          \'fields[email]\' => $email,\\r\\n          \'fields[Name]\' => $first_name.\' \'.$last_name,\\r\\n          \'request_ip\' => $ip,\\r\\n          \'overwrite\' => 2,\\r\\n          \'double_optin\' => 1\\r\\n        );\\r\\n        if ($phone)\\r\\n            $args[\'fields[phone]\']=$phone;\\r\\n        $result=$this->uniRequest(\'subscribe\', $args);\\r\\n        if ($result==\'too_many_double_optins\'){\\r\\n            $args[\'double_optin\']=0;\\r\\n            $result=$this->uniRequest(\'subscribe\', $args);\\r\\n        }\\r\\n\\/\\/        return $result;\\r\\n    }\\r\\n}\\r\\n\\r\\nfunction validateEmail($email){\\r\\n    $pattern = \\"\\/^[^@]{1,64}\\\\@[^\\\\@]{1,255}$\\/\\";\\r\\n    $condition = @preg_match($pattern, $email);\\r\\n    if (!$condition) {\\r\\n        return true;\\r\\n    }\\r\\n\\r\\n    $email_array = explode(\\"@\\", $email);\\r\\n    $local_array = explode(\\".\\", $email_array[0]);\\r\\n    for ($i = 0; $i < sizeof($local_array); $i++) {\\r\\n        $pattern = \\"\\/^(([A-Za-z0-9!#$%&\'*+\\\\\\/=?^_`{|}~-][A-Za-z0-9!#$%&\'*+\\\\\\/=?^_`{|}~\\\\.-]{0,63})|(\\\\\\"[^(\\\\\\\\|\\\\\\")]{0,62}\\\\\\"))$\\/\\";\\r\\n        $condition = @preg_match($pattern,$local_array[$i]);\\r\\n        if (!$condition) {\\r\\n            return true;\\r\\n        }\\r\\n    }\\r\\n\\r\\n    $pattern = \\"^\\\\[?[0-9\\\\.]+\\\\]?$\\";\\r\\n    $condition = @preg_match($pattern, $email_array[1]);\\r\\n    if (!$condition) {\\r\\n        $domain_array = explode(\\".\\", $email_array[1]);\\r\\n        if (sizeof($domain_array) < 2) {\\r\\n            return true;\\r\\n        }\\r\\n        for ($i = 0; $i < sizeof($domain_array); $i++) {\\r\\n            $pattern = \\"\\/^(([A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9])|([A-Za-z0-9]+))$\\/\\";\\r\\n            $condition = @preg_match($pattern,$domain_array[$i]);\\r\\n            if (!$condition) {\\r\\n                return true;\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n    return false;\\r\\n}\\r\\n\\r\\n$properties =& $scriptProperties;\\r\\n\\r\\n$properties[\'email\'] = isset($_POST[\'email\']) ? $_POST[\'email\'] : null;\\r\\n\\r\\n$errors = array(\\r\\n    \'email\' => false\\r\\n);\\r\\n\\r\\n\\/* email *\\/\\r\\n$errors[\'email\'] = validateEmail($properties[\'email\']);\\r\\n\\/* end email *\\/\\r\\n\\r\\n$output = array(\'success\'=>true);\\r\\n\\r\\n$errorCheck = false;\\r\\n$errorOutput = array();\\r\\nforeach ($errors as $name => $error) {\\r\\n    if($error) {\\r\\n        $errorCheck = true;\\r\\n        $errorOutput[$name] = true;\\r\\n    }\\r\\n}\\r\\n\\r\\nif($errorCheck) {\\r\\n    $output = array(\\r\\n        \'success\'   =>  false,\\r\\n        \'errors\'    =>  $errorOutput\\r\\n    );\\r\\n} else {\\r\\n    $uni = new uniApi($modx->getOption(\'unisender_api_key\'));\\r\\n\\r\\n    $uni->subscribe($properties[\'email\'], $modx->getOption(\'unisender_list_ids\'));\\r\\n}\\r\\n\\r\\nreturn json_encode($output);","locked":0,"properties":"a:0:{}","moduleguid":"","static":1,"static_file":"assets\\/basetheme-elements\\/snippets\\/formSubscribe.php","content":"\\/**\\r\\n * Description of uniApi\\r\\n *\\r\\n * @author ors\\r\\n *\\/\\r\\nclass uniApi {\\r\\n\\r\\n    public $api_key;\\r\\n    public $lang = \'ru\';\\r\\n    private $langlist = array(\'ru\');\\r\\n\\r\\n    \\/**\\r\\n     * \\u0421\\u043e\\u0437\\u0434\\u0430\\u0435\\u043c \\u043e\\u0431\\u044a\\u0435\\u043a\\u0442 \\u0441 \\u0440\\u0430\\u0437\\u0440\\u0435\\u0448\\u0435\\u043d\\u043d\\u044b\\u043c\\u0438 \\u044f\\u0437\\u044b\\u043a\\u0430\\u043c\\u0438\\r\\n     * @param string $key \\u043a\\u043b\\u044e\\u0447 \\u0434\\u043e\\u0441\\u0442\\u0443\\u043f\\u0430 \\u043a API\\r\\n     * @param string $lang \\u044f\\u0437\\u044b\\u043a \\u0441\\u043e\\u043e\\u0431\\u0449\\u0435\\u043d\\u0438\\u0439 \\u0441\\u0435\\u0440\\u0432\\u0435\\u0440\\u0430 API, \\u0432 \\u0434\\u0430\\u043d\\u043d\\u044b\\u0439 \\u043c\\u043e\\u043c\\u0435\\u043d\\u0442 \\u043f\\u043e\\u0434\\u0434\\u0435\\u0440\\u0436\\u0438\\u0432\\u0430\\u0435\\u0442\\u0441\\u044f ru, en, it\\r\\n     *\\/\\r\\n    public function __construct($api_key, $lang = \'ru\') {\\r\\n        $this->api_key = $api_key;\\r\\n        if (in_array($lang, $this->langlist))\\r\\n            $this->lang = $lang; \\r\\n    } \\r\\n\\r\\n    \\/**\\r\\n     * \\u041e\\u0442\\u043f\\u0440\\u0430\\u0432\\u043a\\u0430 \\u0437\\u0430\\u043f\\u0440\\u043e\\u0441\\u043e\\u0432 \\u0438 \\u043e\\u0431\\u0440\\u0430\\u0431\\u043e\\u0442\\u043a\\u0430 \\u043e\\u0448\\u0438\\u0431\\u043e\\u043a\\r\\n     * @param string $method \\u043d\\u0430\\u0437\\u0432\\u0430\\u043d\\u0438\\u0435 \\u043c\\u0435\\u0442\\u043e\\u0434\\u0430\\r\\n     * @param array $args \\u0430\\u0440\\u0433\\u0443\\u043c\\u0435\\u043d\\u0442\\u044b \\u043c\\u0435\\u0442\\u043e\\u0434\\u0430, \\u0441\\u0432\\u043e\\u0438 \\u0434\\u043b\\u044f \\u043a\\u0430\\u0436\\u0434\\u043e\\u0433\\u043e \\u043c\\u0435\\u0442\\u043e\\u0434\\u0430\\r\\n     *\\/\\r\\n    private function uniRequest($method, $args) {\\r\\n        $post_array = array_merge(array(\\r\\n            \'api_key\' => $this->api_key,\\r\\n            \'lang\' => $this->lang,\\r\\n        ),$args);\\r\\n\\r\\n        $ch = curl_init();\\r\\n        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);\\r\\n        curl_setopt($ch, CURLOPT_POST, 1);\\r\\n        curl_setopt($ch, CURLOPT_POSTFIELDS, $post_array);\\r\\n        curl_setopt($ch, CURLOPT_TIMEOUT, 10);\\r\\n        curl_setopt($ch, CURLOPT_URL,\\r\\n                \'http:\\/\\/api.unisender.com\\/ru\\/api\\/\'.$method.\'?format=json\');\\r\\n        $result = curl_exec($ch);\\r\\n\\r\\n        if ($result) {\\r\\n            \\/\\/ \\u0420\\u0430\\u0441\\u043a\\u043e\\u0434\\u0438\\u0440\\u0443\\u0435\\u043c \\u043e\\u0442\\u0432\\u0435\\u0442 API-\\u0441\\u0435\\u0440\\u0432\\u0435\\u0440\\u0430\\r\\n            $jsonObj = json_decode($result);\\r\\n\\r\\n            if (null === $jsonObj) {\\r\\n                \\/\\/ \\u041e\\u0448\\u0438\\u0431\\u043a\\u0430 \\u0432 \\u043f\\u043e\\u043b\\u0443\\u0447\\u0435\\u043d\\u043d\\u043e\\u043c \\u043e\\u0442\\u0432\\u0435\\u0442\\u0435\\r\\n                echo \\"Invalid JSON\\";\\r\\n            } elseif (!empty($jsonObj->error)) {\\r\\n                \\/\\/ \\u041e\\u0448\\u0438\\u0431\\u043a\\u0430 \\u0434\\u043e\\u0431\\u0430\\u0432\\u043b\\u0435\\u043d\\u0438\\u044f \\u043f\\u043e\\u043b\\u044c\\u0437\\u043e\\u0432\\u0430\\u0442\\u0435\\u043b\\u044f\\r\\n                echo \\"An error occured: \\" . $jsonObj->error . \\"(code: \\" . $jsonObj->code . \\")\\";\\r\\n            }\\r\\n        } else {\\r\\n            \\/\\/ \\u041e\\u0448\\u0438\\u0431\\u043a\\u0430 \\u0441\\u043e\\u0435\\u0434\\u0438\\u043d\\u0435\\u043d\\u0438\\u044f \\u0441 API-\\u0441\\u0435\\u0440\\u0432\\u0435\\u0440\\u043e\\u043c\\r\\n            echo \\"API access error\\";\\r\\n        }\\r\\n        return $jsonObj->result;\\r\\n    }\\r\\n    \\/**\\r\\n    * \\u042d\\u0442\\u043e\\u0442 \\u043c\\u0435\\u0442\\u043e\\u0434 \\u0434\\u043e\\u0431\\u0430\\u0432\\u043b\\u044f\\u0435\\u0442 \\u043a\\u043e\\u043d\\u0442\\u0430\\u043a\\u0442\\u044b (e-mail \\u0430\\u0434\\u0440\\u0435\\u0441 \\u0438\\/\\u0438\\u043b\\u0438 \\u043c\\u043e\\u0431\\u0438\\u043b\\u044c\\u043d\\u044b\\u0439 \\u0442\\u0435\\u043b\\u0435\\u0444\\u043e\\u043d) \\u043f\\u043e\\u0434\\u043f\\u0438\\u0441\\u0447\\u0438\\u043a\\u0430 \\u0432 \\u043e\\u0434\\u0438\\u043d \\u0438\\u043b\\u0438 \\u043d\\u0435\\u0441\\u043a\\u043e\\u043b\\u044c\\u043a\\u043e \\u0441\\u043f\\u0438\\u0441\\u043a\\u043e\\u0432, \\u0430 \\u0442\\u0430\\u043a\\u0436\\u0435 \\u043f\\u043e\\u0437\\u0432\\u043e\\u043b\\u044f\\u0435\\u0442 \\u0434\\u043e\\u0431\\u0430\\u0432\\u0438\\u0442\\u044c\\/\\u043f\\u043e\\u043c\\u0435\\u043d\\u044f\\u0442\\u044c \\u0437\\u043d\\u0430\\u0447\\u0435\\u043d\\u0438\\u044f \\u0434\\u043e\\u043f\\u043e\\u043b\\u043d\\u0438\\u0442\\u0435\\u043b\\u044c\\u043d\\u044b\\u0445 \\u043f\\u043e\\u043b\\u0435\\u0439 \\u0438 \\u043c\\u0435\\u0442\\u043e\\u043a.\\r\\n    * @param <type> $email\\r\\n    * @param <type> $list \\u041f\\u0435\\u0440\\u0435\\u0447\\u0438\\u0441\\u043b\\u0435\\u043d\\u043d\\u044b\\u0435 \\u0447\\u0435\\u0440\\u0435\\u0437 \\u0437\\u0430\\u043f\\u044f\\u0442\\u0443\\u044e \\u043a\\u043e\\u0434\\u044b \\u0441\\u043f\\u0438\\u0441\\u043a\\u043e\\u0432, \\u0432 \\u043a\\u043e\\u0442\\u043e\\u0440\\u044b\\u0435 \\u043d\\u0430\\u0434\\u043e \\u0434\\u043e\\u0431\\u0430\\u0432\\u0438\\u0442\\u044c \\u043f\\u043e\\u0434\\u043f\\u0438\\u0441\\u0447\\u0438\\u043a\\u0430.\\r\\n    * @param <type> $phone \\u0412 \\u0441\\u043b\\u0443\\u0447\\u0430\\u0435 \\u043d\\u0430\\u043b\\u0438\\u0447\\u0438\\u044f \\u0438 e-mail, \\u0438 \\u0442\\u0435\\u043b\\u0435\\u0444\\u043e\\u043d\\u0430, \\u043f\\u043e\\u0434\\u043f\\u0438\\u0441\\u0447\\u0438\\u043a \\u0431\\u0443\\u0434\\u0435\\u0442 \\u0432\\u043a\\u043b\\u044e\\u0447\\u0451\\u043d \\u0438 \\u0432 e-mail, \\u0438 \\u0432 SMS \\u0441\\u043f\\u0438\\u0441\\u043a\\u0438 \\u0440\\u0430\\u0441\\u0441\\u044b\\u043b\\u043a\\u0438.\\r\\n    * @param <type> $ip IP-\\u0430\\u0434\\u0440\\u0435\\u0441 \\u043f\\u043e\\u0434\\u043f\\u0438\\u0441\\u0447\\u0438\\u043a\\u0430\\r\\n    * @param <type> $first_name\\r\\n    * @param <type> $last_name \\r\\n    *\\/\\r\\n    public function subscribe($email, $list, $phone=NULL, $ip=NULL, $first_name=NULL, $last_name=NULL) {\\r\\n        $args = array (\\r\\n          \'list_ids\' => $list,\\r\\n          \'fields[email]\' => $email,\\r\\n          \'fields[Name]\' => $first_name.\' \'.$last_name,\\r\\n          \'request_ip\' => $ip,\\r\\n          \'overwrite\' => 2,\\r\\n          \'double_optin\' => 1\\r\\n        );\\r\\n        if ($phone)\\r\\n            $args[\'fields[phone]\']=$phone;\\r\\n        $result=$this->uniRequest(\'subscribe\', $args);\\r\\n        if ($result==\'too_many_double_optins\'){\\r\\n            $args[\'double_optin\']=0;\\r\\n            $result=$this->uniRequest(\'subscribe\', $args);\\r\\n        }\\r\\n\\/\\/        return $result;\\r\\n    }\\r\\n}\\r\\n\\r\\nfunction validateEmail($email){\\r\\n    $pattern = \\"\\/^[^@]{1,64}\\\\@[^\\\\@]{1,255}$\\/\\";\\r\\n    $condition = @preg_match($pattern, $email);\\r\\n    if (!$condition) {\\r\\n        return true;\\r\\n    }\\r\\n\\r\\n    $email_array = explode(\\"@\\", $email);\\r\\n    $local_array = explode(\\".\\", $email_array[0]);\\r\\n    for ($i = 0; $i < sizeof($local_array); $i++) {\\r\\n        $pattern = \\"\\/^(([A-Za-z0-9!#$%&\'*+\\\\\\/=?^_`{|}~-][A-Za-z0-9!#$%&\'*+\\\\\\/=?^_`{|}~\\\\.-]{0,63})|(\\\\\\"[^(\\\\\\\\|\\\\\\")]{0,62}\\\\\\"))$\\/\\";\\r\\n        $condition = @preg_match($pattern,$local_array[$i]);\\r\\n        if (!$condition) {\\r\\n            return true;\\r\\n        }\\r\\n    }\\r\\n\\r\\n    $pattern = \\"^\\\\[?[0-9\\\\.]+\\\\]?$\\";\\r\\n    $condition = @preg_match($pattern, $email_array[1]);\\r\\n    if (!$condition) {\\r\\n        $domain_array = explode(\\".\\", $email_array[1]);\\r\\n        if (sizeof($domain_array) < 2) {\\r\\n            return true;\\r\\n        }\\r\\n        for ($i = 0; $i < sizeof($domain_array); $i++) {\\r\\n            $pattern = \\"\\/^(([A-Za-z0-9][A-Za-z0-9-]{0,61}[A-Za-z0-9])|([A-Za-z0-9]+))$\\/\\";\\r\\n            $condition = @preg_match($pattern,$domain_array[$i]);\\r\\n            if (!$condition) {\\r\\n                return true;\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n    return false;\\r\\n}\\r\\n\\r\\n$properties =& $scriptProperties;\\r\\n\\r\\n$properties[\'email\'] = isset($_POST[\'email\']) ? $_POST[\'email\'] : null;\\r\\n\\r\\n$errors = array(\\r\\n    \'email\' => false\\r\\n);\\r\\n\\r\\n\\/* email *\\/\\r\\n$errors[\'email\'] = validateEmail($properties[\'email\']);\\r\\n\\/* end email *\\/\\r\\n\\r\\n$output = array(\'success\'=>true);\\r\\n\\r\\n$errorCheck = false;\\r\\n$errorOutput = array();\\r\\nforeach ($errors as $name => $error) {\\r\\n    if($error) {\\r\\n        $errorCheck = true;\\r\\n        $errorOutput[$name] = true;\\r\\n    }\\r\\n}\\r\\n\\r\\nif($errorCheck) {\\r\\n    $output = array(\\r\\n        \'success\'   =>  false,\\r\\n        \'errors\'    =>  $errorOutput\\r\\n    );\\r\\n} else {\\r\\n    $uni = new uniApi($modx->getOption(\'unisender_api_key\'));\\r\\n\\r\\n    $uni->subscribe($properties[\'email\'], $modx->getOption(\'unisender_list_ids\'));\\r\\n}\\r\\n\\r\\nreturn json_encode($output);"}',
+        'guid' => 'd0a85473fe8095cfd5538ff7572af576',
+        'native_key' => 0,
+        'signature' => '102c507d94f7dbc6ad67e1baeb80a59d',
+      ),
+      '2c7c367e6481da30b148af89ccf72bfa' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'name',
+        'class' => 'modSnippet',
+        'object' => '{"id":0,"source":1,"property_preprocess":0,"name":"time","description":"","editor_type":0,"category":0,"cache_type":0,"snippet":"return time();","locked":0,"properties":"a:0:{}","moduleguid":"","static":1,"static_file":"assets\\/basetheme-elements\\/snippets\\/time.php","content":"return time();"}',
+        'guid' => '59cf63001d7e3375d07a8c4927da70de',
+        'native_key' => 0,
+        'signature' => '65909a0f8291f3dfeaf9cd6a6d980da8',
+      ),
+      '333c14c7fabfe2a9352e12010dbbffed' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'name',
+        'class' => 'modSnippet',
+        'object' => '{"id":0,"source":1,"property_preprocess":0,"name":"getDate","description":"","editor_type":0,"category":0,"cache_type":0,"snippet":"$properties =& $scriptProperties;\\r\\n\\r\\n$properties[\'format\'] = !empty($properties[\'format\']) ? $properties[\'format\'] : \'Y-m-d H:i:s\';\\r\\n\\r\\nreturn date($properties[\'format\']);","locked":0,"properties":"a:0:{}","moduleguid":"","static":1,"static_file":"assets\\/basetheme-elements\\/snippets\\/getDate.php","content":"$properties =& $scriptProperties;\\r\\n\\r\\n$properties[\'format\'] = !empty($properties[\'format\']) ? $properties[\'format\'] : \'Y-m-d H:i:s\';\\r\\n\\r\\nreturn date($properties[\'format\']);"}',
+        'guid' => '25f53db7d717e6692c445f4dff174eb7',
+        'native_key' => 0,
+        'signature' => '4831565cb9e8d59e8c1b52977b01ad89',
+      ),
+    ),
+    'Plugins' => 
+    array (
+      'f905a85cabef464a692515cb6a76b802' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'name',
+        'class' => 'modPlugin',
+        'object' => '{"id":null,"source":1,"property_preprocess":0,"name":"lowerCaseUrl","description":"","editor_type":0,"category":0,"cache_type":0,"plugincode":"\\/**\\n * \\u041f\\u043b\\u0430\\u0433\\u0438\\u043d \\u0434\\u043b\\u044f \\u043f\\u0435\\u0440\\u0435\\u0430\\u0434\\u0440\\u0435\\u0441\\u0430\\u0446\\u0438\\u0438 \\u0441 url \\u0441 UpperCase \\u043d\\u0430 LoverCase\\n *\\/\\n$eventName = $modx->event->name;\\n\\nswitch($eventName) {\\n    case \'OnHandleRequest\':\\n        if($modx->context->get(\'key\') != \\"mgr\\"){\\n            if(isset($_GET[\'rewrite-strtolower-url\'])) {\\n                $url = $_GET[\'rewrite-strtolower-url\'];\\n                unset($_GET[\'rewrite-strtolower-url\']);\\n                $params = http_build_query($_GET);\\n                if(strlen($params)) {\\n                    $params = \'?\' . $params;\\n                }\\n                $modx->sendRedirect(\'http:\\/\\/\' . $_SERVER[\'HTTP_HOST\'] . \'\\/\' . strtolower($url) . $params, array(\'responseCode\' => \'HTTP\\/1.1 301 Moved Permanently\'));\\n            }\\n        }\\n        break;\\n}","locked":0,"properties":null,"disabled":0,"moduleguid":"","static":1,"static_file":"assets\\/basetheme-elements\\/plugins\\/lowerCaseUrl.php","content":"\\/**\\n * \\u041f\\u043b\\u0430\\u0433\\u0438\\u043d \\u0434\\u043b\\u044f \\u043f\\u0435\\u0440\\u0435\\u0430\\u0434\\u0440\\u0435\\u0441\\u0430\\u0446\\u0438\\u0438 \\u0441 url \\u0441 UpperCase \\u043d\\u0430 LoverCase\\n *\\/\\n$eventName = $modx->event->name;\\n\\nswitch($eventName) {\\n    case \'OnHandleRequest\':\\n        if($modx->context->get(\'key\') != \\"mgr\\"){\\n            if(isset($_GET[\'rewrite-strtolower-url\'])) {\\n                $url = $_GET[\'rewrite-strtolower-url\'];\\n                unset($_GET[\'rewrite-strtolower-url\']);\\n                $params = http_build_query($_GET);\\n                if(strlen($params)) {\\n                    $params = \'?\' . $params;\\n                }\\n                $modx->sendRedirect(\'http:\\/\\/\' . $_SERVER[\'HTTP_HOST\'] . \'\\/\' . strtolower($url) . $params, array(\'responseCode\' => \'HTTP\\/1.1 301 Moved Permanently\'));\\n            }\\n        }\\n        break;\\n}"}',
+        'guid' => '470fed849732262e28427ddac0ffd069',
+        'native_key' => NULL,
+        'signature' => 'f440431575f9204840427cfa3a1b3b21',
+        'related_objects' => 
+        array (
+          'PluginEvents' => 
+          array (
+            '99e3a1ae7d9704784d83a6f1827201b3' => 
+            array (
+              'preserve_keys' => true,
+              'update_object' => true,
+              'unique_key' => 
+              array (
+                0 => 'pluginid',
+                1 => 'event',
+              ),
+              'class' => 'modPluginEvent',
+              'object' => '{"pluginid":0,"event":"OnHandleRequest","priority":0,"propertyset":0}',
+              'guid' => '7830c697aa05b8abba3d98ee3fd25218',
+              'native_key' => 
+              array (
+                0 => 0,
+                1 => 'OnHandleRequest',
+              ),
+              'signature' => 'dc6a693f06194202a4ed2f1187047356',
+            ),
+          ),
+        ),
+      ),
+      '0c7ca1b392e6f45b881cb0b65f69331a' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'name',
+        'class' => 'modPlugin',
+        'object' => '{"id":null,"source":1,"property_preprocess":0,"name":"clearCache","description":"","editor_type":0,"category":0,"cache_type":0,"plugincode":"$eventName = $modx->event->name;\\r\\nswitch($eventName) {\\r\\n    case \'OnBeforeCacheUpdate\':\\r\\n        $options = array(\'objects\' => null, \'extensions\' => array(\'.php\', \'.log\'));\\r\\n        $modx->cacheManager->clearCache(array(\'baseThemeCache\\/\'),$options);\\r\\n\\r\\n        break;\\r\\n}","locked":0,"properties":null,"disabled":0,"moduleguid":"","static":1,"static_file":"assets\\/basetheme-elements\\/plugins\\/clearCache.php","content":"$eventName = $modx->event->name;\\r\\nswitch($eventName) {\\r\\n    case \'OnBeforeCacheUpdate\':\\r\\n        $options = array(\'objects\' => null, \'extensions\' => array(\'.php\', \'.log\'));\\r\\n        $modx->cacheManager->clearCache(array(\'baseThemeCache\\/\'),$options);\\r\\n\\r\\n        break;\\r\\n}"}',
+        'guid' => 'd8cd0865ad99825d99d093944b36af5f',
+        'native_key' => NULL,
+        'signature' => '7daabd7a0762727ee078b5fe1bbccbbd',
+        'related_objects' => 
+        array (
+          'PluginEvents' => 
+          array (
+            '0431d9aa694bef893390d44a365cc050' => 
+            array (
+              'preserve_keys' => true,
+              'update_object' => true,
+              'unique_key' => 
+              array (
+                0 => 'pluginid',
+                1 => 'event',
+              ),
+              'class' => 'modPluginEvent',
+              'object' => '{"pluginid":0,"event":"OnBeforeCacheUpdate","priority":0,"propertyset":0}',
+              'guid' => '688b27ff51e88a3dae1bc692e941c625',
+              'native_key' => 
+              array (
+                0 => 0,
+                1 => 'OnBeforeCacheUpdate',
+              ),
+              'signature' => 'd64975d188f3ba18da7f3b59bcc67ea7',
+            ),
+          ),
+        ),
+      ),
+    ),
+    'Templates' => 
+    array (
+      '76f82c588c0b122548b402b6b96f6eb1' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'templatename',
+        'class' => 'modTemplate',
+        'object' => '{"id":0,"source":1,"property_preprocess":0,"templatename":"index","description":"Index template","editor_type":0,"category":0,"icon":"","template_type":0,"content":"[[$metaBase]]\\r\\n[[$headerBase]]\\r\\n[[$indexContent]]\\r\\n[[$footerBase]]","locked":0,"properties":null,"static":1,"static_file":"assets\\/basetheme-elements\\/templates\\/index.tpl"}',
+        'guid' => '9e8b4310fc92baa163270add90780f7b',
+        'native_key' => 0,
+        'signature' => '0a7ccb9bce4521e3b027262e7b12ab41',
+      ),
+      'c3c8f215659a9a27fc9530dff5c3db1d' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'templatename',
+        'class' => 'modTemplate',
+        'object' => '{"id":0,"source":1,"property_preprocess":0,"templatename":"text","description":"Text template","editor_type":0,"category":0,"icon":"","template_type":0,"content":"[[$metaBase]]\\r\\n[[$headerBase]]\\r\\n[[$textContent]]\\r\\n[[$footerBase]]","locked":0,"properties":null,"static":1,"static_file":"assets\\/basetheme-elements\\/templates\\/text.tpl"}',
+        'guid' => '1427e2bdb3b9cb86d63eb74be5ca60f5',
+        'native_key' => 0,
+        'signature' => 'dd3df83b0777935887171ac1a445070e',
+      ),
+      '5aa43acbbd0153568a9190d31d967c8f' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'templatename',
+        'class' => 'modTemplate',
+        'object' => '{"id":0,"source":1,"property_preprocess":0,"templatename":"contacts","description":"Contact page template","editor_type":0,"category":0,"icon":"","template_type":0,"content":"[[$metaBase]]\\r\\n[[$headerBase]]\\r\\n[[$contactsContent]]\\r\\n[[$footerBase]]","locked":0,"properties":null,"static":1,"static_file":"assets\\/basetheme-elements\\/templates\\/contacts.tpl"}',
+        'guid' => '7570c0b1598c938dec5e5125ee09c3a7',
+        'native_key' => 0,
+        'signature' => 'd85d991f0d43ba4ff82f379e5f8f9a5d',
+      ),
+    ),
+    'TemplateVars' => 
+    array (
+      'ddbefdce69fd319fe89a02d0f8ba8cbd' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'name',
+        'class' => 'modTemplateVar',
+        'object' => '{"id":null,"source":0,"property_preprocess":0,"type":"image","name":"img","caption":"Preview","description":"","editor_type":0,"category":0,"locked":0,"elements":null,"rank":0,"display":"text","default_text":null,"properties":null,"input_properties":null,"output_properties":null,"static":0,"static_file":"","content":null}',
+        'guid' => '62857082d2ae450bba3c9e8f3ecdf8eb',
+        'native_key' => NULL,
+        'signature' => '553bbcf5f5ed99f5a5985fda9a78993e',
+      ),
+    ),
+    'Children' => 
+    array (
+      '1d36bbc961a60537e3674960c1bfb39c' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'category',
+        'related_objects' => 
+        array (
+          'Chunks' => 
+          array (
+            '6ddd371ecbed823c1a1d75a1951804d6' => 
+            array (
+              'class' => 'modChunk',
+              'object' => '{"id":0,"source":1,"property_preprocess":0,"name":"metaBase","description":"","editor_type":0,"category":0,"cache_type":0,"snippet":"<!DOCTYPE html>\\r\\n<html lang=\\"[[++cultureKey]]\\">\\r\\n    <head>\\r\\n        <meta charset=\\"utf-8\\" \\/>\\r\\n        <title>[[*longtitle:htmlent:default=`[[*pagetitle:htmlent]][[%lf_site_name:htmlent]]`]]<\\/title>\\r\\n        <meta name=\\"description\\" content=\\"[[*description:htmlent:default=`[[%lf_description:htmlent]]`]]\\" \\/>\\r\\n        <base href=\\"[[++site_url]]\\" \\/>\\r\\n        <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0\\">\\r\\n        <meta name=\\"mobile-web-app-capable\\" content=\\"yes\\">\\r\\n        <meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">\\r\\n        <meta name=\\"apple-mobile-web-app-status-bar-style\\" content=\\"black\\">\\r\\n        <meta name=\\"apple-mobile-web-app-title\\" content=\\"[[*pagetitle:htmlent]]\\">\\r\\n\\r\\n\\t\\t<meta name=\\"cmsmagazine\\" content=\\"a39ef97fd1d4cf6d3e103f0ff48ea4f6\\" \\/>\\r\\n\\r\\n        <meta property=\\"og:title\\" content=\\"[[*longtitle:htmlent:default=`[[*pagetitle:htmlent]] \\/ [[++site_name]]`]]\\" \\/>\\r\\n        <meta property=\\"og:description\\" content=\\"[[*description:htmlent:default=`[[%lf_description:htmlent]]`]]\\" \\/>\\r\\n        <meta property=\\"og:type\\" content=\\"website\\" \\/>\\r\\n        <meta property=\\"og:url\\" content=\\"[[~[[*id]]? &scheme=`full`]]\\" \\/>\\r\\n        <meta property=\\"og:image\\" content=\\"[[*img:notempty=`[[++site_url:replace=`\\/[[++cultureKey]]\\/==`]][[*img]]`:default=`[[++site_url]]assets\\/design\\/images\\/logo.png`]]\\" \\/>\\r\\n        <meta property=\\"og:site_name\\" content=\\"[[++site_name]]\\" \\/>\\r\\n\\r\\n        <meta http-equiv=\\"x-dns-prefetch-control\\" content=\\"on\\">\\r\\n        <link rel=\\"dns-prefetch\\" href=\\"http:\\/\\/code.jquery.com\\" \\/>\\r\\n        <link rel=\\"dns-prefetch\\" href=\\"http:\\/\\/fonts.googleapis.com\\" \\/>\\r\\n        <link rel=\\"dns-prefetch\\" href=\\"http:\\/\\/www.google-analytics.com\\" \\/>\\r\\n\\r\\n        <link rel=\\"author\\" href=\\"humans.txt\\" \\/>\\r\\n        <link rel=\\"icon\\" href=\\"[[++site_url]]favicon.ico\\" type=\\"image\\/x-icon\\" \\/> \\r\\n        <link rel=\\"shortcut icon\\" href=\\"[[++site_url]]favicon.ico\\" type=\\"image\\/x-icon\\" \\/>\\r\\n        \\r\\n        [[Molt?\\r\\n            &minifyCss=`1`\\r\\n            &minifyJs=`1`\\r\\n            &cacheFolder=`[[++basetheme.design_url]]min\\/`\\r\\n            &jsSources=`\\r\\n                [[++basetheme.design_url]]js\\/jquery\\/plugins\\/jquery.imgpreload.js\\r\\n                ,[[++basetheme.design_url]]js\\/jquery\\/plugins\\/form\\/jquery.form.js\\r\\n                ,[[++basetheme.design_url]]js\\/jquery\\/plugins\\/validation\\/jquery.validate.js\\r\\n                ,[[++basetheme.design_url]]js\\/jquery\\/plugins\\/xhrPool.js\\r\\n\\t\\t\\t\\t,[[++basetheme.design_url]]js\\/mbc\\/site.js\\r\\n\\t\\t\\t\\t,[[++basetheme.design_url]]js\\/mbc\\/siteSub.js\\r\\n\\t\\t\\t\\t,[[++basetheme.design_url]]js\\/mbc\\/data.js\\r\\n\\t\\t\\t\\t,[[++basetheme.design_url]]js\\/mbc\\/mode\\/normalMode.js\\r\\n\\t\\t\\t\\t,[[++basetheme.design_url]]js\\/mbc\\/mode\\/pageContacts.js\\r\\n                ,[[++basetheme.design_url]]js\\/init.js\\r\\n            `\\r\\n            &cssSources=`\\r\\n\\t\\t\\t\\t[[++basetheme.design_url]]css\\/style.css\\r\\n\\t\\t\\t\\t,[[++basetheme.design_url]]css\\/content.css\\r\\n            `\\r\\n        ]]\\r\\n        \\r\\n        <!--[if lt IE 9]>\\r\\n            <script src=\\"http:\\/\\/css3-mediaqueries-js.googlecode.com\\/svn\\/trunk\\/css3-mediaqueries.js\\"><\\/script>\\r\\n        <![endif]-->\\r\\n        <!--[if IE]>\\r\\n            <script src=\\"http:\\/\\/html5shiv.googlecode.com\\/svn\\/trunk\\/html5.js\\"><\\/script>\\r\\n        <![endif]-->\\r\\n\\r\\n        <script>\\r\\n            var designUrl = \'[[++basetheme.design_url]]\';\\r\\n        <\\/script>\\r\\n\\r\\n\\t\\t[[++basetheme.ga_tracking_id:notempty=`\\r\\n\\t\\t<script>\\r\\n\\t\\t\\t(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\\r\\n\\t\\t\\t\\t(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\\r\\n\\t\\t\\t\\t\\tm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\\r\\n\\t\\t\\t})(window,document,\'script\',\'\\/\\/www.google-analytics.com\\/analytics.js\',\'ga\');\\r\\n\\t\\t\\tga(\'create\', \'[[++basetheme.ga_tracking_id]]\', \'[[++basetheme.ga_tracking_name]]\');\\r\\n\\t\\t\\tga(\'send\', \'pageview\');\\r\\n\\t\\t<\\/script>\\r\\n\\t\\t`]]\\r\\n    <\\/head>\\r\\n    <body>","locked":0,"properties":null,"static":1,"static_file":"assets\\/basetheme-elements\\/chunks\\/base\\/metaBase.tpl","content":"<!DOCTYPE html>\\r\\n<html lang=\\"[[++cultureKey]]\\">\\r\\n    <head>\\r\\n        <meta charset=\\"utf-8\\" \\/>\\r\\n        <title>[[*longtitle:htmlent:default=`[[*pagetitle:htmlent]][[%lf_site_name:htmlent]]`]]<\\/title>\\r\\n        <meta name=\\"description\\" content=\\"[[*description:htmlent:default=`[[%lf_description:htmlent]]`]]\\" \\/>\\r\\n        <base href=\\"[[++site_url]]\\" \\/>\\r\\n        <meta name=\\"viewport\\" content=\\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0\\">\\r\\n        <meta name=\\"mobile-web-app-capable\\" content=\\"yes\\">\\r\\n        <meta name=\\"apple-mobile-web-app-capable\\" content=\\"yes\\">\\r\\n        <meta name=\\"apple-mobile-web-app-status-bar-style\\" content=\\"black\\">\\r\\n        <meta name=\\"apple-mobile-web-app-title\\" content=\\"[[*pagetitle:htmlent]]\\">\\r\\n\\r\\n\\t\\t<meta name=\\"cmsmagazine\\" content=\\"a39ef97fd1d4cf6d3e103f0ff48ea4f6\\" \\/>\\r\\n\\r\\n        <meta property=\\"og:title\\" content=\\"[[*longtitle:htmlent:default=`[[*pagetitle:htmlent]] \\/ [[++site_name]]`]]\\" \\/>\\r\\n        <meta property=\\"og:description\\" content=\\"[[*description:htmlent:default=`[[%lf_description:htmlent]]`]]\\" \\/>\\r\\n        <meta property=\\"og:type\\" content=\\"website\\" \\/>\\r\\n        <meta property=\\"og:url\\" content=\\"[[~[[*id]]? &scheme=`full`]]\\" \\/>\\r\\n        <meta property=\\"og:image\\" content=\\"[[*img:notempty=`[[++site_url:replace=`\\/[[++cultureKey]]\\/==`]][[*img]]`:default=`[[++site_url]]assets\\/design\\/images\\/logo.png`]]\\" \\/>\\r\\n        <meta property=\\"og:site_name\\" content=\\"[[++site_name]]\\" \\/>\\r\\n\\r\\n        <meta http-equiv=\\"x-dns-prefetch-control\\" content=\\"on\\">\\r\\n        <link rel=\\"dns-prefetch\\" href=\\"http:\\/\\/code.jquery.com\\" \\/>\\r\\n        <link rel=\\"dns-prefetch\\" href=\\"http:\\/\\/fonts.googleapis.com\\" \\/>\\r\\n        <link rel=\\"dns-prefetch\\" href=\\"http:\\/\\/www.google-analytics.com\\" \\/>\\r\\n\\r\\n        <link rel=\\"author\\" href=\\"humans.txt\\" \\/>\\r\\n        <link rel=\\"icon\\" href=\\"[[++site_url]]favicon.ico\\" type=\\"image\\/x-icon\\" \\/> \\r\\n        <link rel=\\"shortcut icon\\" href=\\"[[++site_url]]favicon.ico\\" type=\\"image\\/x-icon\\" \\/>\\r\\n        \\r\\n        [[Molt?\\r\\n            &minifyCss=`1`\\r\\n            &minifyJs=`1`\\r\\n            &cacheFolder=`[[++basetheme.design_url]]min\\/`\\r\\n            &jsSources=`\\r\\n                [[++basetheme.design_url]]js\\/jquery\\/plugins\\/jquery.imgpreload.js\\r\\n                ,[[++basetheme.design_url]]js\\/jquery\\/plugins\\/form\\/jquery.form.js\\r\\n                ,[[++basetheme.design_url]]js\\/jquery\\/plugins\\/validation\\/jquery.validate.js\\r\\n                ,[[++basetheme.design_url]]js\\/jquery\\/plugins\\/xhrPool.js\\r\\n\\t\\t\\t\\t,[[++basetheme.design_url]]js\\/mbc\\/site.js\\r\\n\\t\\t\\t\\t,[[++basetheme.design_url]]js\\/mbc\\/siteSub.js\\r\\n\\t\\t\\t\\t,[[++basetheme.design_url]]js\\/mbc\\/data.js\\r\\n\\t\\t\\t\\t,[[++basetheme.design_url]]js\\/mbc\\/mode\\/normalMode.js\\r\\n\\t\\t\\t\\t,[[++basetheme.design_url]]js\\/mbc\\/mode\\/pageContacts.js\\r\\n                ,[[++basetheme.design_url]]js\\/init.js\\r\\n            `\\r\\n            &cssSources=`\\r\\n\\t\\t\\t\\t[[++basetheme.design_url]]css\\/style.css\\r\\n\\t\\t\\t\\t,[[++basetheme.design_url]]css\\/content.css\\r\\n            `\\r\\n        ]]\\r\\n        \\r\\n        <!--[if lt IE 9]>\\r\\n            <script src=\\"http:\\/\\/css3-mediaqueries-js.googlecode.com\\/svn\\/trunk\\/css3-mediaqueries.js\\"><\\/script>\\r\\n        <![endif]-->\\r\\n        <!--[if IE]>\\r\\n            <script src=\\"http:\\/\\/html5shiv.googlecode.com\\/svn\\/trunk\\/html5.js\\"><\\/script>\\r\\n        <![endif]-->\\r\\n\\r\\n        <script>\\r\\n            var designUrl = \'[[++basetheme.design_url]]\';\\r\\n        <\\/script>\\r\\n\\r\\n\\t\\t[[++basetheme.ga_tracking_id:notempty=`\\r\\n\\t\\t<script>\\r\\n\\t\\t\\t(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){\\r\\n\\t\\t\\t\\t(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\\r\\n\\t\\t\\t\\t\\tm=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\\r\\n\\t\\t\\t})(window,document,\'script\',\'\\/\\/www.google-analytics.com\\/analytics.js\',\'ga\');\\r\\n\\t\\t\\tga(\'create\', \'[[++basetheme.ga_tracking_id]]\', \'[[++basetheme.ga_tracking_name]]\');\\r\\n\\t\\t\\tga(\'send\', \'pageview\');\\r\\n\\t\\t<\\/script>\\r\\n\\t\\t`]]\\r\\n    <\\/head>\\r\\n    <body>"}',
+              'guid' => 'e69e5cbea73159ef16e6b9b71685fdd0',
+              'native_key' => 0,
+              'signature' => 'e72ba6d34560780f0941d9e922623b4c',
+            ),
+            '952bba9e3cf49fb20e18fe715962e2fd' => 
+            array (
+              'class' => 'modChunk',
+              'object' => '{"id":0,"source":1,"property_preprocess":0,"name":"headerBase","description":"","editor_type":0,"category":0,"cache_type":0,"snippet":"[[*id:is=`[[++site_start]]`:then=`\\r\\n    <span class=\\"logo\\">\\r\\n        <img src=\\"[[++basetheme.design_url]]images\\/logo.png\\" alt=\\"[[++site_name]]\\" class=\\"site-logo\\">\\r\\n    <\\/span>\\r\\n`:else=`\\r\\n    <a href=\\"[[++site_url]]\\" class=\\"logo\\">\\r\\n        <img src=\\"[[++basetheme.design_url]]images\\/logo.png\\" alt=\\"[[++site_name]]\\" class=\\"site-logo\\">\\r\\n    <\\/a>\\r\\n`]]\\r\\n<ul class=\\"nav\\">\\r\\n    [[pdoMenu@mainMenu?\\r\\n        &startId=`0`\\r\\n        &tplParentRow=`@INLINE\\r\\n        <li class=\\"[[+classnames]]\\">\\r\\n            <a href=\\"[[+link]]\\" [[+attributes]]>[[+menutitle:htmlent]]<\\/a>\\r\\n            <ul>[[+wrapper]]<\\/ul>\\r\\n        <\\/li>`\\r\\n        &tplParentRowHere=`@INLINE\\r\\n        <li class=\\"[[+classnames]]\\">\\r\\n            <span>[[+menutitle:htmlent]]<\\/span>\\r\\n            <ul>[[+wrapper]]<\\/ul>\\r\\n        <\\/li>`\\r\\n        &tplParentRowActive=`@INLINE\\r\\n        <li class=\\"[[+classnames]]\\">\\r\\n            <a href=\\"[[+link]]\\" [[+attributes]]>[[+menutitle:htmlent]]<\\/a>\\r\\n            <ul>[[+wrapper]]<\\/ul>\\r\\n        <\\/li>`\\r\\n        &tplHere=`@INLINE <li class=\\"[[+classnames]]\\"><span>[[+menutitle:htmlent]]<\\/span><\\/li>`\\r\\n        &tplOuter=`@INLINE [[+wrapper]]`\\r\\n    ]]\\r\\n<\\/ul>","locked":0,"properties":null,"static":1,"static_file":"assets\\/basetheme-elements\\/chunks\\/base\\/headerBase.tpl","content":"[[*id:is=`[[++site_start]]`:then=`\\r\\n    <span class=\\"logo\\">\\r\\n        <img src=\\"[[++basetheme.design_url]]images\\/logo.png\\" alt=\\"[[++site_name]]\\" class=\\"site-logo\\">\\r\\n    <\\/span>\\r\\n`:else=`\\r\\n    <a href=\\"[[++site_url]]\\" class=\\"logo\\">\\r\\n        <img src=\\"[[++basetheme.design_url]]images\\/logo.png\\" alt=\\"[[++site_name]]\\" class=\\"site-logo\\">\\r\\n    <\\/a>\\r\\n`]]\\r\\n<ul class=\\"nav\\">\\r\\n    [[pdoMenu@mainMenu?\\r\\n        &startId=`0`\\r\\n        &tplParentRow=`@INLINE\\r\\n        <li class=\\"[[+classnames]]\\">\\r\\n            <a href=\\"[[+link]]\\" [[+attributes]]>[[+menutitle:htmlent]]<\\/a>\\r\\n            <ul>[[+wrapper]]<\\/ul>\\r\\n        <\\/li>`\\r\\n        &tplParentRowHere=`@INLINE\\r\\n        <li class=\\"[[+classnames]]\\">\\r\\n            <span>[[+menutitle:htmlent]]<\\/span>\\r\\n            <ul>[[+wrapper]]<\\/ul>\\r\\n        <\\/li>`\\r\\n        &tplParentRowActive=`@INLINE\\r\\n        <li class=\\"[[+classnames]]\\">\\r\\n            <a href=\\"[[+link]]\\" [[+attributes]]>[[+menutitle:htmlent]]<\\/a>\\r\\n            <ul>[[+wrapper]]<\\/ul>\\r\\n        <\\/li>`\\r\\n        &tplHere=`@INLINE <li class=\\"[[+classnames]]\\"><span>[[+menutitle:htmlent]]<\\/span><\\/li>`\\r\\n        &tplOuter=`@INLINE [[+wrapper]]`\\r\\n    ]]\\r\\n<\\/ul>"}',
+              'guid' => '54b9903f5a85f7b0a5901bbeb81741cf',
+              'native_key' => 0,
+              'signature' => '0b970181834f29fcc2100da95947ab4e',
+            ),
+            '0fa92d14168d81d83021fe275f35d459' => 
+            array (
+              'class' => 'modChunk',
+              'object' => '{"id":0,"source":1,"property_preprocess":0,"name":"footerBase","description":"","editor_type":0,"category":0,"cache_type":0,"snippet":"<\\/body>\\r\\n<\\/html>","locked":0,"properties":null,"static":1,"static_file":"assets\\/basetheme-elements\\/chunks\\/base\\/footerBase.tpl","content":"<\\/body>\\r\\n<\\/html>"}',
+              'guid' => '474f639527517851064b7703897b0da7',
+              'native_key' => 0,
+              'signature' => 'be2c0055e328d09e05abd06e30864d0c',
+            ),
+          ),
+        ),
+        'related_object_attributes' => 
+        array (
+          'Chunks' => 
+          array (
+            'preserve_keys' => false,
+            'update_object' => true,
+            'unique_key' => 'name',
+          ),
+          'Templates' => 
+          array (
+            'preserve_keys' => false,
+            'update_object' => true,
+            'unique_key' => 'name',
+          ),
+        ),
+        'class' => 'modCategory',
+        'object' => '{"id":null,"parent":0,"category":"base"}',
+        'guid' => 'ecc5491db5c4bc833a0169673678005b',
+        'native_key' => NULL,
+        'signature' => '964d76882996d03fc956607aa6338061',
+      ),
+      '964852fb8127985d788e0c58e9264ebb' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'category',
+        'related_objects' => true,
+        'related_object_attributes' => 
+        array (
+          'Chunks' => 
+          array (
+            'preserve_keys' => false,
+            'update_object' => true,
+            'unique_key' => 'name',
+          ),
+          'Templates' => 
+          array (
+            'preserve_keys' => false,
+            'update_object' => true,
+            'unique_key' => 'name',
+          ),
+        ),
+        'class' => 'modCategory',
+        'object' => '{"id":null,"parent":0,"category":"common"}',
+        'guid' => '85258096db034663c0af2942b6d3d284',
+        'native_key' => NULL,
+        'signature' => '6428fe4b01c7cdb85ed245c378ca4f5c',
+      ),
+      '7adf84d6353976f69af942d18d4d72a4' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'category',
+        'related_objects' => 
+        array (
+          'Chunks' => 
+          array (
+            '05813a0489d7e068306d4cddf16723c9' => 
+            array (
+              'class' => 'modChunk',
+              'object' => '{"id":0,"source":1,"property_preprocess":0,"name":"404Content","description":"","editor_type":0,"category":0,"cache_type":0,"snippet":"","locked":0,"properties":null,"static":1,"static_file":"assets\\/basetheme-elements\\/chunks\\/content\\/404Content.tpl","content":""}',
+              'guid' => 'da90b5e33b4e451b12ba4a3bd9968fdb',
+              'native_key' => 0,
+              'signature' => '8c5d210140fefd33f2340e0180c3bac3',
+            ),
+            '71768d66ea392a5bbc12c80136ebd81a' => 
+            array (
+              'class' => 'modChunk',
+              'object' => '{"id":0,"source":1,"property_preprocess":0,"name":"indexContent","description":"","editor_type":0,"category":0,"cache_type":0,"snippet":"<h1>[[*pagetitle:htmlent]]<\\/h1>\\r\\n[[*content]]","locked":0,"properties":null,"static":1,"static_file":"assets\\/basetheme-elements\\/chunks\\/content\\/indexContent.tpl","content":"<h1>[[*pagetitle:htmlent]]<\\/h1>\\r\\n[[*content]]"}',
+              'guid' => '92592a2b3780279c75aa86c9fdb7c870',
+              'native_key' => 0,
+              'signature' => 'd4934d11e17add60547a7b0e934c5e3f',
+            ),
+            'b4536818efe0b7bb83ad5a3cc9fbdf23' => 
+            array (
+              'class' => 'modChunk',
+              'object' => '{"id":0,"source":1,"property_preprocess":0,"name":"textContent","description":"","editor_type":0,"category":0,"cache_type":0,"snippet":"<div class=\\"jumbotron\\">\\r\\n\\t<h1>[[*pagetitle]]<\\/h1>\\r\\n\\t[[*content]]\\r\\n<\\/div>","locked":0,"properties":null,"static":1,"static_file":"assets\\/basetheme-elements\\/chunks\\/content\\/textContent.tpl","content":"<div class=\\"jumbotron\\">\\r\\n\\t<h1>[[*pagetitle]]<\\/h1>\\r\\n\\t[[*content]]\\r\\n<\\/div>"}',
+              'guid' => 'fac2590e4509bf4c540b025726830430',
+              'native_key' => 0,
+              'signature' => '6b9961c98ca704a0eaf6a7a1156fda11',
+            ),
+            '3bce338f0abb9f29d09cf484dae6fea6' => 
+            array (
+              'class' => 'modChunk',
+              'object' => '{"id":0,"source":1,"property_preprocess":0,"name":"contactsContent","description":"","editor_type":0,"category":0,"cache_type":0,"snippet":"<div class=\\"jumbotron\\">\\r\\n\\t<h1>[[*pagetitle]]<\\/h1>\\r\\n\\t[[*content]]\\r\\n<\\/div>","locked":0,"properties":null,"static":1,"static_file":"assets\\/basetheme-elements\\/chunks\\/content\\/contactsContent.tpl","content":"<div class=\\"jumbotron\\">\\r\\n\\t<h1>[[*pagetitle]]<\\/h1>\\r\\n\\t[[*content]]\\r\\n<\\/div>"}',
+              'guid' => '8d8428c593930aed5da6918cc9c164e0',
+              'native_key' => 0,
+              'signature' => '292a8d664423a1a0706a0ceab258c6c4',
+            ),
+          ),
+        ),
+        'related_object_attributes' => 
+        array (
+          'Chunks' => 
+          array (
+            'preserve_keys' => false,
+            'update_object' => true,
+            'unique_key' => 'name',
+          ),
+          'Templates' => 
+          array (
+            'preserve_keys' => false,
+            'update_object' => true,
+            'unique_key' => 'name',
+          ),
+        ),
+        'class' => 'modCategory',
+        'object' => '{"id":null,"parent":0,"category":"content"}',
+        'guid' => 'c2f232cd8d5e1b438c5d0bf6cf7e367f',
+        'native_key' => NULL,
+        'signature' => '2a2f61ba0e1bca605b41f37d23237cb5',
+      ),
+      'f01b541da0f5481fa14f477781df19e5' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'category',
+        'related_objects' => 
+        array (
+          'Chunks' => 
+          array (
+            '0d37840e1eeba5d137187a4b3f23b6d2' => 
+            array (
+              'class' => 'modChunk',
+              'object' => '{"id":0,"source":1,"property_preprocess":0,"name":"emailContacts","description":"","editor_type":0,"category":0,"cache_type":0,"snippet":"\\u0421\\u043e\\u043e\\u0431\\u0449\\u0435\\u043d\\u0438\\u0435 \\u0441 \\u0441\\u0430\\u0439\\u0442\\u0430 [[++site_name]] <br>\\r\\n<b>\\u0418\\u043c\\u044f:<\\/b>  [[+name]]<br>\\r\\n<b>Email:<\\/b> [[+email]]<br>\\r\\n<b>\\u0421\\u043e\\u043e\\u0431\\u0449\\u0435\\u043d\\u0438\\u0435:<\\/b> <br>\\r\\n[[+message:nl2br]]","locked":0,"properties":null,"static":1,"static_file":"assets\\/basetheme-elements\\/chunks\\/partsContacts\\/emailContacts.tpl","content":"\\u0421\\u043e\\u043e\\u0431\\u0449\\u0435\\u043d\\u0438\\u0435 \\u0441 \\u0441\\u0430\\u0439\\u0442\\u0430 [[++site_name]] <br>\\r\\n<b>\\u0418\\u043c\\u044f:<\\/b>  [[+name]]<br>\\r\\n<b>Email:<\\/b> [[+email]]<br>\\r\\n<b>\\u0421\\u043e\\u043e\\u0431\\u0449\\u0435\\u043d\\u0438\\u0435:<\\/b> <br>\\r\\n[[+message:nl2br]]"}',
+              'guid' => 'c1d8f766d59abded369a79c58a8643dd',
+              'native_key' => 0,
+              'signature' => 'b75c736dafa2bd5513633acb4ec02ce5',
+            ),
+          ),
+        ),
+        'related_object_attributes' => 
+        array (
+          'Chunks' => 
+          array (
+            'preserve_keys' => false,
+            'update_object' => true,
+            'unique_key' => 'name',
+          ),
+          'Templates' => 
+          array (
+            'preserve_keys' => false,
+            'update_object' => true,
+            'unique_key' => 'name',
+          ),
+        ),
+        'class' => 'modCategory',
+        'object' => '{"id":null,"parent":0,"category":"partsContacts"}',
+        'guid' => 'a4fe74747968c918ab20562554767aa7',
+        'native_key' => NULL,
+        'signature' => 'adbaced09d5c6dc532ca1aa1a5cc06ba',
+      ),
+      'af5c8e49c8a08e02fa072ef4521dc176' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'category',
+        'related_objects' => 
+        array (
+          'Templates' => 
+          array (
+            '3c29b9d0d60710c9e3493f1ec23806a4' => 
+            array (
+              'preserve_keys' => false,
+              'update_object' => true,
+              'unique_key' => 'templatename',
+              'class' => 'modTemplate',
+              'object' => '{"id":0,"source":1,"property_preprocess":0,"templatename":404,"description":"404 template","editor_type":0,"category":0,"icon":"","template_type":0,"content":"[[$metaBase? ?notfound=`1`]]\\r\\n[[$404content]]\\r\\n[[$footerBase? ?notfound=`1`]]","locked":0,"properties":null,"static":1,"static_file":"assets\\/basetheme-elements\\/templates\\/404.tpl"}',
+              'guid' => 'd437049b2e96dbcd5373c56809810c9e',
+              'native_key' => 0,
+              'signature' => '17b024f0c65126943c4ce79dbfbedb9a',
+            ),
+          ),
+        ),
+        'related_object_attributes' => 
+        array (
+          'Chunks' => 
+          array (
+            'preserve_keys' => false,
+            'update_object' => true,
+            'unique_key' => 'name',
+          ),
+          'Templates' => 
+          array (
+            'preserve_keys' => false,
+            'update_object' => true,
+            'unique_key' => 'name',
+          ),
+        ),
+        'class' => 'modCategory',
+        'object' => '{"id":null,"parent":0,"category":"technical"}',
+        'guid' => '9b0f88ca2edd68793194f08cb5f3bf83',
+        'native_key' => NULL,
+        'signature' => '61147662d5aae55d931a5f428f8ec09a',
+      ),
+    ),
+  ),
+  'related_object_attributes' => 
+  array (
+    'Snippets' => 
+    array (
+      'preserve_keys' => false,
+      'update_object' => true,
+      'unique_key' => 'name',
+    ),
+    'Children' => 
+    array (
+      'preserve_keys' => false,
+      'update_object' => true,
+      'unique_key' => 'category',
+      'related_objects' => true,
+      'related_object_attributes' => 
+      array (
+        'Chunks' => 
+        array (
+          'preserve_keys' => false,
+          'update_object' => true,
+          'unique_key' => 'name',
+        ),
+        'Templates' => 
+        array (
+          'preserve_keys' => false,
+          'update_object' => true,
+          'unique_key' => 'name',
+        ),
+      ),
+    ),
+    'Plugins' => 
+    array (
+      'preserve_keys' => false,
+      'update_object' => true,
+      'unique_key' => 'name',
+    ),
+    'PluginEvents' => 
+    array (
+      'preserve_keys' => true,
+      'update_object' => true,
+      'unique_key' => 
+      array (
+        0 => 'pluginid',
+        1 => 'event',
+      ),
+    ),
+    'TemplateVars' => 
+    array (
+      'preserve_keys' => false,
+      'update_object' => true,
+      'unique_key' => 'name',
+    ),
+    'Templates' => 
+    array (
+      'preserve_keys' => false,
+      'update_object' => true,
+      'unique_key' => 'templatename',
+    ),
+  ),
+  'namespace' => 'basetheme',
+  'resolve' => 
+  array (
+    0 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b\\/0\\/","target":"return MODX_CORE_PATH . \'packages\\/\';","name":"pdotools-1.9.3-pl1.transport.zip"}',
+    ),
+    1 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b\\/1\\/","target":"return MODX_CORE_PATH . \'packages\\/\';","name":"jevix-1.2.0-pl2.transport.zip"}',
+    ),
+    2 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b\\/2\\/","target":"return MODX_CORE_PATH . \'packages\\/\';","name":"resizer-1.0.1-pl.transport.zip"}',
+    ),
+    3 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b\\/3\\/","target":"return MODX_CORE_PATH . \'packages\\/\';","name":"dateago-1.0.2-pl.transport.zip"}',
+    ),
+    4 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b\\/4\\/","target":"return MODX_CORE_PATH . \'packages\\/\';","name":"lexiconfrontend-1.0.1-beta.transport.zip"}',
+    ),
+    5 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b\\/5\\/","target":"return MODX_CORE_PATH . \'packages\\/\';","name":"molt-1.0.2-beta.transport.zip"}',
+    ),
+    6 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b\\/6\\/","target":"return MODX_CORE_PATH . \'packages\\/\';","name":"pthumb-2.3.1-pl.transport.zip"}',
+    ),
+    7 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b\\/7\\/","target":"return MODX_CORE_PATH . \'packages\\/\';","name":"tickets-1.4.2-rc2.transport.zip"}',
+    ),
+    8 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b\\/8\\/","target":"return MODX_CORE_PATH . \'components\\/\';","name":"basetheme"}',
+    ),
+    9 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b\\/9\\/","target":"return MODX_ASSETS_PATH;","name":"basetheme-design"}',
+    ),
+    10 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b\\/10\\/","target":"return MODX_ASSETS_PATH;","name":"uploads"}',
+    ),
+    11 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b\\/11\\/","target":"return MODX_BASE_PATH;","name":"_buildSite"}',
+    ),
+    12 => 
+    array (
+      'type' => 'php',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b.resolve.setup.resolver","type":"php","name":"resolve.setup"}',
+    ),
+    13 => 
+    array (
+      'type' => 'php',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b.resolve.contenttype.resolver","type":"php","name":"resolve.contenttype"}',
+    ),
+    14 => 
+    array (
+      'type' => 'php',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b.resolve.propertysets.resolver","type":"php","name":"resolve.propertysets"}',
+    ),
+    15 => 
+    array (
+      'type' => 'php',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b.resolve.settings.resolver","type":"php","name":"resolve.settings"}',
+    ),
+    16 => 
+    array (
+      'type' => 'php',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b.resolve.sources.resolver","type":"php","name":"resolve.sources"}',
+    ),
+    17 => 
+    array (
+      'type' => 'php',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b.resolve.tv.template.resolver","type":"php","name":"resolve.tv.template"}',
+    ),
+    18 => 
+    array (
+      'type' => 'php',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b.resolve.resources.resolver","type":"php","name":"resolve.resources"}',
+    ),
+    19 => 
+    array (
+      'type' => 'php',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b.resolve.settingsresourcedependence.resolver","type":"php","name":"resolve.settingsresourcedependence"}',
+    ),
+    20 => 
+    array (
+      'type' => 'php',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b.resolve.contextsettings.resolver","type":"php","name":"resolve.contextsettings"}',
+    ),
+    21 => 
+    array (
+      'type' => 'php',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b.resolve.usergroups.resolver","type":"php","name":"resolve.usergroups"}',
+    ),
+    22 => 
+    array (
+      'type' => 'php',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b.resolve.users.resolver","type":"php","name":"resolve.users"}',
+    ),
+    23 => 
+    array (
+      'type' => 'php',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b.resolve.htaccess.resolver","type":"php","name":"resolve.htaccess"}',
+    ),
+    24 => 
+    array (
+      'type' => 'php',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b.resolve.humans.resolver","type":"php","name":"resolve.humans"}',
+    ),
+    25 => 
+    array (
+      'type' => 'php',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b.resolve.gitignore.resolver","type":"php","name":"resolve.gitignore"}',
+    ),
+    26 => 
+    array (
+      'type' => 'php',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b.resolve.configsample.resolver","type":"php","name":"resolve.configsample"}',
+    ),
+    27 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"basetheme-1.2.0-beta\\/modCategory\\/94c4c5f0624b973e39c350a9ac73ed7b\\/27\\/","target":"return MODX_CORE_PATH . \'components\\/lexiconfrontend\\/\';","name":"lexicon"}',
+    ),
+  ),
+  'validate' => NULL,
+  'vehicle_package' => 'transport',
+  'vehicle_class' => 'xPDOObjectVehicle',
+  'guid' => 'f377f5d5909c8fb3f8101a7489589571',
+  'package' => 'modx',
+  'class' => 'modCategory',
+  'signature' => '94c4c5f0624b973e39c350a9ac73ed7b',
+  'native_key' => NULL,
+  'object' => '{"id":null,"parent":0,"category":"baseTheme"}',
+);

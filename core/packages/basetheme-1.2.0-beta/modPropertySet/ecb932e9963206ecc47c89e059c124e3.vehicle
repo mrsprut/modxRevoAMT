@@ -1,0 +1,16 @@
+<?php return array (
+  'unique_key' => 'name',
+  'preserve_keys' => false,
+  'update_object' => true,
+  'namespace' => 'basetheme',
+  'resolve' => NULL,
+  'validate' => NULL,
+  'vehicle_package' => 'transport',
+  'vehicle_class' => 'xPDOObjectVehicle',
+  'guid' => 'db3f0a2e5803a66ca737f08748fef5ff',
+  'package' => 'modx',
+  'class' => 'modPropertySet',
+  'signature' => 'ecb932e9963206ecc47c89e059c124e3',
+  'native_key' => NULL,
+  'object' => '{"id":null,"name":"mainMenu","category":0,"description":"","properties":"a:2:{s:5:\\"level\\";a:7:{s:4:\\"name\\";s:5:\\"level\\";s:4:\\"desc\\";s:0:\\"\\";s:4:\\"type\\";s:11:\\"numberfield\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";s:1:\\"2\\";s:7:\\"lexicon\\";N;s:4:\\"area\\";s:0:\\"\\";}s:13:\\"useWeblinkUrl\\";a:7:{s:4:\\"name\\";s:13:\\"useWeblinkUrl\\";s:4:\\"desc\\";s:0:\\"\\";s:4:\\"type\\";s:13:\\"combo-boolean\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";b:0;s:7:\\"lexicon\\";N;s:4:\\"area\\";s:0:\\"\\";}}"}',
+);

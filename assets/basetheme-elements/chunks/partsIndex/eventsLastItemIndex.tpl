@@ -1,0 +1,2 @@
+[[$eventsSubscribeFormIndex]]
+[[$eventsItemIndex]]

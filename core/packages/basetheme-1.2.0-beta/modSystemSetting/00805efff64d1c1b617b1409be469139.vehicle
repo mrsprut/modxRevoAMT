@@ -1,0 +1,16 @@
+<?php return array (
+  'unique_key' => 'key',
+  'preserve_keys' => true,
+  'update_object' => true,
+  'namespace' => 'basetheme',
+  'resolve' => NULL,
+  'validate' => NULL,
+  'vehicle_package' => 'transport',
+  'vehicle_class' => 'xPDOObjectVehicle',
+  'guid' => '617b38bed28090bcd489e9d04122c556',
+  'package' => 'modx',
+  'class' => 'modSystemSetting',
+  'signature' => '00805efff64d1c1b617b1409be469139',
+  'native_key' => 'basetheme.id_ajax_form_subscribe',
+  'object' => '{"key":"basetheme.id_ajax_form_subscribe","value":"","xtype":"numberfield","namespace":"basetheme","area":"basetheme_resources","editedon":null}',
+);

@@ -1,0 +1,406 @@
+<?php
+
+/*
+* Create documents
+*/
+function createDocs(&$modx, $context_key, $node, $doc = null)
+{
+    $base_params = array(
+        'update' => true,
+    );
+
+    if (isset($node['childs'])) {
+        $menuIndex = 0;
+        foreach ($node['childs'] as $resource => $options) {
+            $classKey = 'modResource';
+            $keyInName = explode(':', $resource);
+            if (isset($keyInName[1])) {
+                $classKey = $keyInName[1];
+            }
+
+            $menuIndex++;
+            $pid = ($doc ? $doc->id : 0);
+            $params = array_merge($base_params, $options);
+            $params['parent'] = $pid;
+            if (!$doc__ = $modx->getObject($classKey,
+                $params['parentCheck'] ?
+                    array(
+                        'context_key' => $context_key,
+                        'alias' => $params['alias'],
+                    )
+                    :
+                    array(
+                        'context_key' => $context_key,
+                        'parent' => $pid,
+                        'alias' => $params['alias'],
+                    )
+            )
+            ) {
+                $params['menuindex'] = $menuIndex;
+                $doc__ = $modx->newObject($classKey);
+                $doc__->fromArray($params, '', true, true);
+                $doc__->cleanAlias($params['alias']);
+                if (!$doc__->save()) {
+                    $modx->log(xPDO::LOG_LEVEL_ERROR, "Can not save {$params['pagetitle']} document");
+                } else {
+                    $modx->log(modX::LOG_LEVEL_INFO, 'Create resource ' . $params['pagetitle'] . '.');
+                }
+            } else if ($params['update'] === true) {
+                $doc__->fromArray($params);
+                if (!$doc__->save()) {
+                    $modx->log(xPDO::LOG_LEVEL_ERROR, "Can not update {$params['pagetitle']} document");
+                } else {
+                    $modx->log(modX::LOG_LEVEL_INFO, 'Update resource ' . $params['pagetitle'] . '.');
+                }
+            }
+            if (isset($params['group']) && !empty($params['group'])) {
+                $doc__->joinGroup($params['group']);
+                $modx->log(modX::LOG_LEVEL_INFO, 'Join resource ' . $params['pagetitle'] . ' to group ' . $params['group'] . '.');
+            }
+
+            if (isset($params['tvs']) && !empty($params['tvs'])) {
+                foreach ($params['tvs'] as $tvName => $value) {
+                    $tv = $modx->getObject('modTemplateVar', array('name' => $tvName));
+                    if (empty($tv)) {
+                        $modx->log(xPDO::LOG_LEVEL_ERROR, 'Could not find TV: ' . $tvName . ' to associate to Templates.');
+                        continue;
+                    }
+
+                    $templateVarResource = $modx->getObject('modTemplateVarResource', array(
+                        'tmplvarid' => $tv->get('id'),
+                        'contentid' => $doc__->get('id'),
+                    ));
+                    if (!$templateVarResource) {
+                        $templateVarResource = $modx->newObject('modTemplateVarResource');
+                        $templateVarResource->fromArray(array(
+                            'tmplvarid' => $tv->get('id'),
+                            'contentid' => $doc__->get('id'),
+                            'value' => $value,
+                        ), '', true, true);
+
+                        if ($templateVarResource->save() == false) {
+                            $modx->log(xPDO::LOG_LEVEL_ERROR, 'An unknown error occurred while trying to associate the TV ' . $tvName . ' to the Resource ' . $doc__->get('id'));
+                        }
+                    }
+                }
+            }
+
+            createDocs($modx, $context_key, $options, $doc__);
+        }
+    }
+}
+
+/*
+ * Content
+ */
+
+function getIntro($content)
+{
+    $intro = substr(strip_tags($content), 0, 200);
+    return $intro;
+}
+
+if ($object && $object->xpdo) {
+    switch ($options[xPDOTransport::PACKAGE_ACTION]) {
+        case xPDOTransport::ACTION_INSTALL:
+        case xPDOTransport::ACTION_UPGRADE:
+            $modx =& $object->xpdo;
+            /*
+             * search templates
+             */
+            $templateNames = array(
+                'index',
+                'about',
+                'eventsList',
+                'event',
+                'tours'
+            );
+            $templateVarPrefix = 'tpl_';
+            foreach ($templateNames as $templateName) {
+                $varName = $templateVarPrefix . $templateName;
+                if (!$$varName = $modx->getObject('modTemplate', array('templatename' => $templateName))) {
+                    $modx->log(xPDO::LOG_LEVEL_ERROR, "Could not get Template with name '{$templateName}'");
+                    return false;
+                }
+            }
+
+
+            /* Content*/
+            /*$indexContent = '<p class="a"><strong>ООО «Первая фумигационная компания»</strong> является одним из наиболее
+крупных предприятий в секторе обработки с/х продукции Восточной Украины.</p>
+<p class="a">&nbsp;</p>
+<p class="a">Предприятие
+было основано в 2009 году и первоначально было направлено на проведение
+обеззараживания экспортных грузов в трюмах морских судов портов Азовского моря:
+ГП Бердянский морской торговый порт, ГП Мариупольский морской торговый порт и
+ООО «Укртрансагро» (причал № 2 СРЗ).</p>
+<p class="a">&nbsp;</p>
+<p class="a"><span style="line-height: 1.5em;">На
+сегодняшний день в состав </span><span style="line-height: 1.5em;">ООО «Первая фумигационная компания» </span><span style="line-height: 1.5em;">входит три филиала, обеспеченные полным
+кадровым составом, материальной и технической базой. Основываясь на этом, мы
+обеспечиваем на высоком уровне услугами наших клиентов в портах Мариуполь,
+Бердянск, Херсон и Николаев.</span></p>
+<p class="a"><span style="line-height: 1.5em;"><br /></span></p>
+<p>
+<strong>Нашей
+целью</strong> является предоставление
+качественных услуги и соблюдение безопасности всех участников вовлеченных в
+процесс транспортировки зерна покупателям.</p>
+<p>&nbsp;</p>
+<hr />
+<p>&nbsp;</p>
+<p>&nbsp;</p>';*/
+
+            /*  */
+            $resources = array(
+                'childs' => array(
+                    'home' => array(
+                        'template' => $tpl_index->get('id'),
+                        'pagetitle' => 'Home',
+                        'longtitle' => '',
+                        'description' => '',
+                        'introtext' => '',
+                        'alias' => 'index',
+                        'uri' => 'index',
+                        'link_attributes' => '',
+                        'content' => '',
+                        'isfolder' => false,
+                        'published' => true,
+                        'publishedon' => time(),
+                        'hidemenu' => false,
+                        'cacheable' => true,
+                        'searchable' => true,
+                        'richtext' => true,
+                        'context_key' => 'web',
+                        'menutitle' => '',
+                    ),
+                    /*'about' => array(
+                        'template' => $tpl_list->get('id'),
+                        'pagetitle' => 'About',
+                        'longtitle' => '',
+                        'description' => '',
+                        'introtext' => '',
+                        'alias' => 'about',
+                        'uri' => 'about',
+                        'link_attributes' => '',
+                        'content' => '',
+                        'isfolder' => true,
+                        'published' => true,
+                        'publishedon' => time(),
+                        'hidemenu' => false,
+                        'cacheable' => true,
+                        'searchable' => true,
+                        'richtext' => true,
+                        'context_key' => 'web',
+                        'menutitle' => '',
+                        'tvs' => array(
+                            'image' => 'assets/userimages/kolosok.jpg'
+                        ),
+                        'childs' => array(
+                            'service1' => array(
+                                'template' => $tpl_topic->get('id'),
+                                'pagetitle' => 'Комплексное обеззараживание высокотоксичным газом зерновых и масленичных продуктов на местах хранения',
+                                'longtitle' => 'Комплексное обеззараживание высокотоксичным газом зерновых и масленичных продуктов на местах хранения',
+                                'description' => '',
+                                'introtext' => '',
+                                'alias' => '3',
+                                'uri' => '3',
+                                'link_attributes' => '',
+                                'content' => '',
+                                'isfolder' => false,
+                                'published' => true,
+                                'publishedon' => time(),
+                                'hidemenu' => false,
+                                'cacheable' => true,
+                                'searchable' => true,
+                                'richtext' => true,
+                                'context_key' => 'web',
+                                'menutitle' => '',
+                                'tvs' => array(
+                                    'image' => 'assets/userimages/ascets/userimages/kolosok.jpg'
+                                ),
+                            ),
+                            'service2' => array(
+                                'template' => $tpl_topic->get('id'),
+                                'pagetitle' => 'Обеззараживание складских помещений методами аэрозольной обработки.',
+                                'longtitle' => 'Обеззараживание складских помещений методами аэрозольной обработки.',
+                                'description' => '',
+                                'introtext' => '',
+                                'alias' => '4',
+                                'uri' => '4',
+                                'link_attributes' => '',
+                                'content' => $service2Content,
+                                'isfolder' => false,
+                                'published' => true,
+                                'publishedon' => time(),
+                                'hidemenu' => false,
+                                'cacheable' => true,
+                                'searchable' => true,
+                                'richtext' => true,
+                                'context_key' => 'web',
+                                'menutitle' => '',
+                                'tvs' => array(
+                                    'image' => 'assets/userimages/Fogging_W.jpg'
+                                ),
+
+                            ),
+                            'service3' => array(
+                                'template' => $tpl_topic->get('id'),
+                                'pagetitle' => 'Фумигация в транзите зерновых, отрубей пшеничных, семечки подсолнечника и т.п. загруженного в трюма морских судов',
+                                'longtitle' => 'Фумигация в транзите зерновых, отрубей пшеничных, семечки подсолнечника и т.п. загруженного в трюма морских судов',
+                                'description' => '',
+                                'introtext' => '',
+                                'alias' => '5',
+                                'uri' => '5',
+                                'link_attributes' => '',
+                                'content' => '',
+                                'isfolder' => false,
+                                'published' => true,
+                                'publishedon' => time(),
+                                'hidemenu' => false,
+                                'cacheable' => true,
+                                'searchable' => true,
+                                'richtext' => true,
+                                'context_key' => 'web',
+                                'menutitle' => '',
+                                'tvs' => array(
+                                    'image' => 'assets/userimages/ffcc3.jpg'
+                                ),
+                            ),
+                            'service4' => array(
+                                'template' => $tpl_topic->get('id'),
+                                'pagetitle' => 'Колорация пищевыми красителями зерна.',
+                                'longtitle' => 'Колорация пищевыми красителями зерна.',
+                                'description' => '',
+                                'introtext' => '',
+                                'alias' => '6',
+                                'uri' => '6',
+                                'link_attributes' => '',
+                                'content' => $service4Content,
+                                'isfolder' => false,
+                                'published' => true,
+                                'publishedon' => time(),
+                                'hidemenu' => false,
+                                'cacheable' => true,
+                                'searchable' => true,
+                                'richtext' => true,
+                                'context_key' => 'web',
+                                'menutitle' => '',
+                                'tvs' => array(
+                                    'image' => 'assets/userimages/FFumComp coloration.jpg'
+                                ),
+                            ),
+                            'service5' => array(
+                                'template' => $tpl_topic->get('id'),
+                                'pagetitle' => 'Дегазация фумигированных грузов на местах хранения, в ж/д вагонах и в трюмах морских судов',
+                                'longtitle' => 'Дегазация фумигированных грузов на местах хранения, в ж/д вагонах и в трюмах морских судов',
+                                'description' => '',
+                                'introtext' => '',
+                                'alias' => '6',
+                                'uri' => '6',
+                                'link_attributes' => '',
+                                'content' => $service5Content,
+                                'isfolder' => false,
+                                'published' => true,
+                                'publishedon' => time(),
+                                'hidemenu' => false,
+                                'cacheable' => true,
+                                'searchable' => true,
+                                'richtext' => true,
+                                'context_key' => 'web',
+                                'menutitle' => '',
+                                'tvs' => array(
+                                    'image' => 'assets/userimages/ffcc3.jpg'
+                                ),
+                            ),
+                        ),
+                    ),*/
+                    'about' => array(
+                        'template' => $tpl_about->get('id'),
+                        'pagetitle' => 'about',
+                        'longtitle' => '',
+                        'description' => '',
+                        'introtext' => '',
+                        'alias' => 'about',
+                        'uri' => 'about',
+                        'link_attributes' => '',
+                        'content' => '',
+                        'isfolder' => false,
+                        'published' => true,
+                        'publishedon' => time(),
+                        'hidemenu' => false,
+                        'cacheable' => true,
+                        'searchable' => true,
+                        'richtext' => true,
+                        'context_key' => 'web',
+                        'menutitle' => '',
+                    ),
+                    'eventsList' => array(
+                        'template' => $tpl_eventsList->get('id'),
+                        'pagetitle' => 'eventsList',
+                        'longtitle' => '',
+                        'description' => '',
+                        'introtext' => '',
+                        'alias' => 'memberships',
+                        'uri' => 'memberships',
+                        'link_attributes' => '',
+                        'content' => '',
+                        'isfolder' => true,
+                        'published' => true,
+                        'publishedon' => time(),
+                        'hidemenu' => false,
+                        'cacheable' => true,
+                        'searchable' => true,
+                        'richtext' => true,
+                        'context_key' => 'web',
+                        'menutitle' => '',
+                    ),
+                    'event' => array(
+                        'template' => $tpl_event->get('id'),
+                        'pagetitle' => 'event',
+                        'longtitle' => '',
+                        'description' => '',
+                        'introtext' => '',
+                        'alias' => 'contacts',
+                        'uri' => 'contacts',
+                        'link_attributes' => '',
+                        'content' => '',
+                        'isfolder' => false,
+                        'published' => true,
+                        'publishedon' => time(),
+                        'hidemenu' => false,
+                        'cacheable' => true,
+                        'searchable' => true,
+                        'richtext' => true,
+                        'context_key' => 'web',
+                        'menutitle' => '',
+                    ),
+                    'tours' => array(
+                        'template' => $tpl_tours->get('id'),
+                        'pagetitle' => 'tours',
+                        'longtitle' => '',
+                        'description' => '',
+                        'introtext' => '',
+                        'alias' => 'partners',
+                        'uri' => 'partners',
+                        'link_attributes' => '',
+                        'content' => '',
+                        'isfolder' => false,
+                        'published' => true,
+                        'publishedon' => time(),
+                        'hidemenu' => false,
+                        'cacheable' => true,
+                        'searchable' => true,
+                        'richtext' => true,
+                        'context_key' => 'web',
+                        'menutitle' => '',
+                    ),
+                ),
+            );
+            createDocs($modx, 'web', $resources, null);
+            $modx->reloadContext('web');
+            break;
+
+    }
+}
+return true;

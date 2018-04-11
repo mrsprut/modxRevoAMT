@@ -1,0 +1,16 @@
+<?php return array (
+  'unique_key' => 'key',
+  'preserve_keys' => true,
+  'update_object' => true,
+  'namespace' => 'basetheme',
+  'resolve' => NULL,
+  'validate' => NULL,
+  'vehicle_package' => 'transport',
+  'vehicle_class' => 'xPDOObjectVehicle',
+  'guid' => '24142e83c2c47ca52d1c59f9834c2002',
+  'package' => 'modx',
+  'class' => 'modSystemSetting',
+  'signature' => 'b298417ea67877ebe8223fdbc8733b54',
+  'native_key' => 'basetheme.design_url',
+  'object' => '{"key":"basetheme.design_url","value":"{assets_url}basetheme-design\\/","xtype":"textfield","namespace":"basetheme","area":"basetheme_main","editedon":null}',
+);

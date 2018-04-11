@@ -1,0 +1,19 @@
+<?php return array (
+  'preserve_keys' => false,
+  'unique_key' => 
+  array (
+    0 => 'name',
+  ),
+  'update_object' => true,
+  'namespace' => 'basetheme',
+  'resolve' => NULL,
+  'validate' => NULL,
+  'vehicle_package' => 'transport',
+  'vehicle_class' => 'xPDOObjectVehicle',
+  'guid' => '89fa7c129fe7cb5c536feb7f72f75b35',
+  'package' => 'modx',
+  'class' => 'modUserGroup',
+  'signature' => 'd04eb0422141fa39e82889de48cbdf5e',
+  'native_key' => NULL,
+  'object' => '{"id":null,"name":"Manager","description":null,"parent":0,"rank":0,"dashboard":1}',
+);

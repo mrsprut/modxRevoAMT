@@ -1,0 +1,50 @@
+<?php return array (
+  'preserve_keys' => true,
+  'update_object' => false,
+  'unique_key' => 'text',
+  'related_objects' => 
+  array (
+    'Action' => 
+    array (
+      '745db3a77799a080a54871d6655a5ac1' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => false,
+        'unique_key' => 
+        array (
+          0 => 'namespace',
+          1 => 'controller',
+        ),
+        'class' => 'modAction',
+        'object' => '{"id":0,"namespace":"lexiconfrontend","controller":"index","haslayout":1,"lang_topics":"lexiconfrontend:mgr","assets":"","help_url":"","parent":0}',
+        'guid' => '94749510521cc2a253f1ff4eb5ec7958',
+        'native_key' => 0,
+        'signature' => '59f3e78b1e3cf7a3fbe1484558520370',
+      ),
+    ),
+  ),
+  'related_object_attributes' => 
+  array (
+    'Action' => 
+    array (
+      'preserve_keys' => false,
+      'update_object' => false,
+      'unique_key' => 
+      array (
+        0 => 'namespace',
+        1 => 'controller',
+      ),
+    ),
+  ),
+  'namespace' => 'lexiconfrontend',
+  'resolve' => NULL,
+  'validate' => NULL,
+  'vehicle_package' => 'transport',
+  'vehicle_class' => 'xPDOObjectVehicle',
+  'guid' => '2b11b2f4ca636bf6f57fc434260e7bab',
+  'package' => 'modx',
+  'class' => 'modMenu',
+  'signature' => '0a6e0494d18a2249a5e076e66c229665',
+  'native_key' => 'lexiconfrontend',
+  'object' => '{"text":"lexiconfrontend","parent":"components","action":0,"description":"lexiconfrontend_menu_desc","icon":"images\\/icons\\/plugin.gif","menuindex":0,"params":"","handler":"","permissions":""}',
+);

@@ -1,0 +1,19 @@
+<?php return array (
+  'preserve_keys' => false,
+  'unique_key' => 
+  array (
+    0 => 'name',
+  ),
+  'update_object' => true,
+  'namespace' => 'basetheme',
+  'resolve' => NULL,
+  'validate' => NULL,
+  'vehicle_package' => 'transport',
+  'vehicle_class' => 'xPDOObjectVehicle',
+  'guid' => '16c9a0e08379bec9c95d53561d2d5ca9',
+  'package' => 'modx',
+  'class' => 'modResourceGroup',
+  'signature' => 'bf3c23dd62c8af4669048119906ea4fb',
+  'native_key' => NULL,
+  'object' => '{"id":null,"name":"technical","private_memgroup":0,"private_webgroup":0}',
+);

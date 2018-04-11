@@ -1,0 +1,431 @@
+/*?=Animation
+------------------- */     
+@-webkit-keyframes opacity {0% {opacity:1;top:0} 100% {opacity:0;top:-477.5px} }
+@-webkit-keyframes opacity2 {0% {opacity:0;padding-top:477.5px} 100% {opacity:1;padding-top:0} }
+  
+
+		 
+/* Global
+------------------- */
+
+html, body {position:relative}
+body {font:14px/26px 'Noto Serif', serif;color:#000;min-width:320px;background:#fffeec}
+
+a {color:#000;text-decoration:none}
+
+.inblock {padding:0 20px}
+.inblock:after {display:block;content:'';clear:both}
+
+.clear {clear:both}
+
+.allBlockLink {position:absolute;top:0;left:0;bottom:0;right:0;z-index:5;display:block;text-indent:-9999px}
+
+/* forms
+------------------- */
+.form {position:relative;z-index:2}
+.form .line {margin-bottom:20px;position:relative}
+.form .line:after {display:block;content:'';clear:both}
+.form .line.req:before {display:block;top:5px;right:10px;content:'*';font-size:14px;color:#bb8748;position:absolute}
+.form input[type="text"], .form input[type="email"], .form textarea {height:50px;padding:10px;text-align:center;box-sizing:border-box;width:100%;border-radius:15px;border:1px solid #3e3c3d;color:#999999;font:italic 14px/30px 'Noto Serif', serif;background:transparent}
+.form textarea {height:90px;max-width:100%;min-width:100%;min-height:90px}
+.form textarea:focus {outline:none}
+
+.but {display:inline-block;position:relative;z-index:2;height:38px;padding:0 35px;border-radius:15px;color:#fff;text-transform:uppercase;background:#bb8748;margin:0;border:1px solid #bb8748;text-decoration:none;font:12px/38px 'Poiret One', cursive;outline:none}
+
+/* sectionName
+------------------- */
+.sectionName {position:fixed;top:0;left:0;right:0;height:34px;padding:10px 20px;z-index:7;overflow:hidden}
+.sectionName:before {position:absolute;z-index:1;top:0;left:0;right:0;bottom:0;content:'';display:block;background:#000;opacity:0.5}
+.sectionName span {position:relative;z-index:2;padding-right:40px;float:right;color:#fff;opacity:0.5;font:14px/34px 'Poiret One', cursive;text-transform:uppercase}
+.sectionName i {position:absolute;right:20px;top:10px;height:34px;width:30px;z-index:2}
+.sectionName.s1 i {background:url('../images/small/ic1.png') center right no-repeat}
+
+/* Header
+------------------- */
+.header {position:relative;height:600px;background:url('../images/small/header.png') center/cover no-repeat #000}
+.header.small {height:50px !important;width:100%;position:fixed;top:0;left:0;z-index:7;background:none}
+.header.small:before {display:none}
+.header:before {position:absolute;top:0;left:0;bottom:0;right:0;opacity:0.5;z-index:1;background:#000;content:'';display:block}
+.header .inblock {position:absolute;z-index:10;top:85px;left:0;right:0;bottom:0}
+
+.header .logo {width:126px;height:65px;display:block;margin:0 auto 30px;text-indent:-9999px;opacity:0.50;background:url('../images/small/logo.png') center no-repeat}
+.header h1 {font:300 30px/30px 'Copperplate Gothic';color:#fff;text-align:center;margin-bottom:20px;opacity:0.66}
+.header .help {font:12px/12px 'Poiret One', cursive;opacity:0.5;color:#fff;text-align:center;margin-bottom:35px}
+.header .social {overflow:hidden;width:100%;text-align:center}
+.header .social li, .header nav .lang li {height:44px;width:44px;display:inline-block;border-radius:50%;margin:0 9px;position:relative}
+.header .social li:before, .header nav .touch:before, .header nav .lang li.active:before {top:0;bottom:0;right:0;left:0;opacity:0.15;border-radius:50%;border:1px solid #fff;position:absolute;content:'';display:block}
+.header .social li a, .header nav .lang li a {position:relative;z-index:2;text-indent:-9999px;height:44px;width:44px;display:block}
+.header .social li.fb a {background:url('../images/small/fb.png') center no-repeat}
+.header .social li.tw a {background:url('../images/small/tw.png') center no-repeat}
+.header .social li.yt a {background:url('../images/small/yt.png') center no-repeat}
+.header .more {position:absolute;bottom:0;left:50%;margin-left:-100px;width:200px;padding:0 25px 0 58px;height:42px;box-sizing:border-box;color:#fff;text-transform:uppercase;font:14px/42px 'Poiret One', cursive;text-align:center}
+.header .more:after {display:block;position:absolute;top:50%;margin-top:-12px;width:18px;height:24px;left:24px;content:'';background:url('../images/small/more.png') center no-repeat}
+.header .more:before {content:'';display:block;position:absolute;top:0;left:0;right:0;bottom:0;border:1px solid #fff;border-bottom:none;opacity:0.15;border-radius:15px 15px 0 0}
+
+.header nav {position:fixed;top:0;left:0;right:0}
+.header nav ul, .header .info {display:none}
+.header nav .touch {height:34px;width:34px;position:absolute;top:10px;left:20px;background:url('../images/small/menu.png') center no-repeat;text-indent:-9999px}
+.header nav.active {background:#17181c;bottom:0;padding:10px 20px 20px;z-index:2}
+.header nav.active .touch {background-image:url('../images/small/menu2.png')}
+.header nav.active ul, .header nav.active .info {display:block}
+.header nav .mainNav {width:100%;text-align:center;padding:85px 0}
+.header nav .mainNav li {font:24px/44px 'Poiret One', cursive;width:100%}
+.header nav .mainNav li.index {height:55px;text-indent:-9999px;margin-bottom:25px}
+.header nav .mainNav li.index a {border:none;display:block;width:106px;height:55px;margin:0 auto;opacity:0.50;background:url('../images/small/logo2.png') center no-repeat}
+.header nav .mainNav li.active {color:#a0a0a1;border-color:#17181c}
+.header nav .mainNav li a {color:#fff;text-decoration:none;border-bottom:1px solid #3a3a3e}
+.header nav .info {padding-top:20px;position:absolute;bottom:20px;left:20px;right:20px;text-align:center;border-top:1px solid #3a3a3e;color:#8b8c8e;font:11px/18px 'Noto Serif', serif}
+.header nav .info a {color:#8b8c8e;text-decoration:underline}
+.header nav .info p {text-transform:uppercase}
+.header nav .lang {position:absolute;right:20px;top:50%;margin-top:-76px;width:44px;font:18px/48px 'Poiret One', cursive;text-align:center;text-transform:uppercase;color:#8b8c8e}
+.header nav .lang li {margin:0 0 10px 0;display:block}
+.header nav .lang li:last-child {margin:0}
+.header nav .lang li a {color:#fff;text-decoration:none;text-indent:0}
+
+/* Main
+------------------- */
+main .inblock, .footer .inblock {padding:0 40px}
+
+.production {padding-bottom:100px}
+.production .picture {position:relative;text-align:center;height:300px;margin-bottom:50px;background:url('../images/small/promo.png') center/cover no-repeat;box-sizing:border-box;padding:175px 30px 30px}
+.production.tours .picture {background:url('../images/large/tour.png') center/cover no-repeat}
+.production .picture h1 {font:36px/30px 'Poiret One', cursive;color:#333333}
+.production article {position:relative;padding-bottom:41px;margin-bottom:40px}
+.production article.nobor:after {display:none}
+.production article:after {position:absolute;left:0;width:50px;bottom:0;border-bottom:1px solid #d9d8c9;content:'';display:block}
+.production article h2 {font:30px/34px 'Poiret One', cursive;text-transform:uppercase;margin-bottom:25px;text-align:center;position:relative;overflow:hidden}
+.production article h2:before {left:0;right:0;top:50%;margin-top:-1px;border-bottom:1px solid #d9d8c9;position:absolute;content:'';display:block}
+.production article h2 span {display:inline-block;padding:0 30px; padding-bottom: 30px !important;background:#fffeec;position:relative;z-index:2}
+.production article img {width:100%;display:block;height:auto;margin-bottom:20px}
+.production article img.standart {width:auto}
+.production article h3 {font:24px/30px 'Noto Serif', serif;margin-bottom:20px}
+.production article p {margin-bottom:20px; vertical-align:top !important}
+.production article.tour {padding:0;margin:0}
+.production article.tour:after {display:none}
+.production article.tour h2 {margin-bottom:50px}
+.production article.tour .descr {position:relative;padding-left:80px;background:url('../images/small/tour.png') left top no-repeat;top:-20px}
+.production article.tour .descr:before {left:-25px;right:-25px;bottom:-25px;top:-65px;border:1px solid #d9d8c9;border-radius:15px;content:'';display:block;position:absolute}
+
+.goods {padding:150px 0 100px;background:#1c1a1b}
+.goods h1 {text-align:center;color:#fff;font:36px/30px 'Poiret One', cursive;margin-bottom:100px}
+.goods .picView {width:200px;height:230px;overflow:hidden;margin:0 auto 50px;padding:0 0 30px}
+.goods .picView img {width:200px;height:200px}
+.goods article {text-align:center;color:#a8a8a8;font:12px/24px 'Noto Serif', serif;position:relative;margin-bottom:100px;background:url('../images/small/light.png') center 30px no-repeat}
+.goods article:last-of-type {margin:0}
+.goods article h2 {color:#fff;font:24px/30px 'Noto Serif', serif;margin-bottom:20px}
+.goods article p {margin-bottom:25px}
+.goods article .center {position:relative;top:-1px;margin:0}
+.goods article .but {border-radius:0 0 15px 15px;color:#1c1a1b}
+.goods article .mark {position:absolute;text-transform:uppercase;top:-20px;right:-20px;width:74px;height:55px;padding-top:20px;background:url('../images/small/mark.png') center no-repeat;color:#fff;font:9px/11px 'Noto Serif', serif;text-align:center}
+.goods .size {border-bottom:1px solid #3e3c3d;padding-bottom:30px}
+.goods .size li {padding-left:35px;display:inline-block;font:14px/26px 'Noto Serif', serif;margin:3px 10px}
+.goods .size li.s30 {background:url('../images/small/s30.png') left center no-repeat}
+.goods .size li.s60 {background:url('../images/small/s60.png') left center no-repeat}
+.goods .size li.s120 {background:url('../images/small/s120.png') left center no-repeat;padding-left:44px}
+.goods .size li.s200 {background:url('../images/small/s200.png') left center no-repeat;padding-left:49px}
+.goods .sender {position:relative;margin-bottom:130px;padding:25px 0;text-align:center}
+.goods .sender:before {top:-30px;left:-30px;right:-30px;bottom:-30px;border:10px solid #bb8748;position:absolute;display:block;content:''}
+.goods .sender .title, .events .sender .title {color:#a8a8a8;font:italic 700 24px/30px 'Noto Serif', serif;margin-bottom:20px}
+.goods .sender .but, .events .sender .but {margin-top:30px;color:#1c1a1b;padding-left:71px;position:relative}
+.goods .sender .but:before, .events .sender .but:before {width:26px;height:17px;top:50%;margin-top:-8px;left:35px;content:'';display:block;position:absolute;background:url('../images/small/mail.png') center no-repeat}
+
+.events {padding-top:0;text-align:center}
+.events h1, .rew h1 {color:#000;font:36px/40px 'Poiret One', cursive;margin-bottom:50px}
+.events article {position:relative;height:380px;overflow:hidden}
+.events article img {position:relative;display:block;width:100%;height:auto;z-index:1}
+.events article:before {top:0;bottom:0;left:0;right:0;background:#000;opacity:0.5;position:absolute;content:'';display:block;z-index:2}
+.events article.notActive .descr {width:200px;height:200px;padding:20px;top:70px;left:50%;margin-left:-120px;border:1px solid #fff;position:absolute;z-index:3;opacity:0.5;border-radius:50%;color:#fff}
+.events article.notActive .descr h2, .events article.active .descr h2 {font:24px/30px 'Noto Serif', serif;padding-top:70px}
+.events article.video .descr, .events article.active .descr {padding:50px 40px;color:#fff;position:absolute;top:0;left:0;bottom:0;right:0;z-index:3}
+.events article.video .descr h2 {font:30px/36px 'Noto Serif', serif;opacity:0.5;margin-bottom:25px}
+.events article.video .descr .videoIcon {padding-top:125px;background:url('../images/small/video.png') center top no-repeat;font-size:11px;text-decoration:underline}
+.events article.active .descr {background:url('../images/small/announce.svg') center no-repeat}
+.events article.active .descr h2 {max-width:240px;margin:0 auto 15px}
+.events article.active .descr .but {background:#fff;color:#000000;border-color:#fff}
+.events article.active .descr .place, .events article.active .descr .time {position:absolute;top:15px;left:20px;opacity:0.5;font:11px/14px 'Noto Serif', serif;max-width:180px;width:45%;text-align:left;padding-left:22px;box-sizing:border-box;background:url('../images/small/mark2.png') left top no-repeat}
+.events article.active .descr .time {right:20px;left:auto;padding:0 22px 0 0;text-align:right;background:url('../images/small/bell.png') right top no-repeat}
+.events .sender {box-sizing:border-box;height:380px;padding:50px 40px;border:10px solid #bb8748}
+.events .sender .title {color:#000}
+.events .sender  input {border-color:#d9d8c9;color:#999999}
+.events .sender .but {color:#fff;margin-top:10px}
+.events .sender .but:before {background:url('../images/small/mail2.png') center no-repeat}
+
+.rew {padding:150px 0 100px;background:#1c1a1b;text-align:center;font:16px/24px 'Noto Serif', serif;color:#8e8d8d}
+.rew h1 {color:#fff;margin-bottom:40px}
+.rew h1 a {color:#fff;padding-bottom:75px}
+.rew article {border-bottom:1px solid #3e3c3d;padding-bottom:35px;margin-bottom:50px}
+.rew article p {margin-bottom:25px}
+.rew article .video {position:relative;margin-bottom:30px}
+.rew article .autor {padding-left:80px;background:url('../images/small/corner.png') left top no-repeat}
+.rew article .autor img {width:75px;height:75px;border-radius:50%;float:left;margin-right:20px;position:absolute}
+.rew article .autor .name {overflow:hidden;color:#fff;font:700 18px/24px 'Noto Serif', serif;text-align:left;padding-top:10px}
+.rew article .autor .name span {font:400 italic 14px/24px 'Noto Serif', serif;color:#8e8d8d}
+.rew .partners .item {margin-bottom:50px}
+.rew .partners .item:last-of-type {margin:0}
+.rew .partners .item img {display:block;margin:0 auto 25px}
+
+.backcall {padding:150px 0 100px;font:18px/24px 'Noto Serif', serif}
+.backcall p {margin-bottom:30px}
+.backcall input[type="text"], .backcall input[type="email"], .backcall textarea {border-color:#d9d8c9;color:#999999;text-align:left;padding-left:20px}
+.backcall .title {font:30px/36px 'Noto Serif', serif;margin-bottom:10px}
+.backcall .but {height:58px;font:18px/58px 'Poiret One', cursive}
+.backcall .help {font:italic 12px/16px 'Noto Serif', serif;padding-top:20px;margin:0}
+.backcall .help sup {color:#bb8748;margin-right:10px;font-size:14px}
+
+/* contacts form message */
+.help-block #success_message {
+    color: #99CC99 !important;
+}
+.help-block #error_email_message {
+    color: #CC6666 !important;
+}
+.help-block #error_message {
+    color: #CC6666 !important;
+}
+
+/* Footer
+------------------- */
+.footer {padding:50px 0;background:#d9d8c9}
+.footer address {padding:0;margin:0 0 35px 0;font:16px/24px 'Noto Serif', serif}
+.footer address .title {font:700 18px/32px 'Noto Serif', serif}
+.footer address a {text-decoration:underline}
+.footer .social {padding:15px 0 25px;border-bottom:1px solid #b9b9ac;overflow:hidden;margin-bottom:25px}
+.footer .social li {width:60px;height:60px;float:left;margin-right:10px}
+.footer .social li a {display:block;text-indent:-9999px;width:30px;height:30px}
+.footer .social li.fb a {background:url('../images/small/fb2.png') center no-repeat}
+.footer .social li.tw a {background:url('../images/small/vk2.png') center no-repeat}
+.footer .social li.yt a {background:url('../images/small/yt2.png') center no-repeat}
+.footer .cpr {font:11px/18px 'Noto Serif', serif;margin-bottom:25px}
+.footer .cpr p {text-transform:uppercase}
+.footer .cpr a {text-decoration:underline}
+.footer .mbc {opacity:0.5;font:10px/14px 'Noto Serif', serif}
+.footer .mbc a {color:#000;text-decoration:underline}
+
+/* @media=768px
+------------------- */
+@media screen and (min-width: 768px) 
+    {
+    
+    /* Global
+    ------------------- */
+	
+	/* sectionName
+	------------------- */
+	.sectionName {right:auto;bottom:0;height:auto;padding:15px 13.5px;width:38px}
+	.sectionName span {display:none}
+	.sectionName i {right:auto;top:50%;left:17.5px;margin-top:-17px}	    
+        
+    /* Header
+    ------------------- */ 
+	.header {background:url('../images/medium/header.png') center/cover no-repeat #000;height:800px}
+	.header .inblock {top:100px}
+
+	.header .logo {width:255px;height:132px;margin:0 auto 50px;opacity:0.50;background:url('../images/medium/logo.png') center no-repeat}
+	.header h1 {font:300 60px/62px 'Copperplate Gothic';margin-bottom:50px;padding:0 75px}
+	.header .help {font:18px/18px 'Poiret One', cursive;text-align:left;position:absolute;bottom:80px;right:60px;max-width:120px;margin:0}
+	.header .help sup {position:absolute;top:10px;left:-10px}
+	.header .social li, .header nav .lang li {height:60px;width:60px}
+	.header .social li a, .header nav .lang li a {height:60px;width:60px}
+	.header .more {bottom:50px;margin-left:-130px;width:260px;padding:0 35px 0 68px;height:58px;font:18px/58px 'Poiret One', cursive}
+	.header .more:after {left:35px}
+	.header .more:before {border-bottom:1px solid #fff;border-radius:15px}	
+	
+	.header nav .touch {height:38px;width:38px;top:15px;left:13.5px}	
+    
+    /* Main
+    ------------------- */
+	main .inblock, .footer .inblock {padding:0 90px}
+
+	.production {padding-bottom:200px}
+	.production .picture {height:400px;margin-bottom:90px;background:url('../images/medium/promo.png') center/cover no-repeat;padding:250px 30px 50px}
+	.production .picture h1 {font:72px/80px 'Poiret One', cursive}
+	.production .inblock {padding:0 160px}
+	.production article {padding-bottom:61px;margin-bottom:60px}
+	.production article:after {width:90px}
+	.production article h2 {font:48px/56px 'Poiret One', cursive;margin-bottom:55px}
+	.production article h2 span {padding:0 35px; padding-bottom: 35px !important}
+	.production article img {margin-bottom:30px}
+	.production article h3 {font:30px/36px 'Noto Serif', serif;margin-bottom:30px}
+	.production article p {margin-bottom:30px; vertical-align:top !important}
+	.production article.tour h2 {font:72px/62px 'Poiret One', cursive;margin-bottom:70px;text-align:center;text-transform:none;overflow:visible;position:relative;left:-60px;letter-spacing:-5px;width:calc(100% + 120px)}
+	.production article.tour h2:before {display:none}
+	.production article.tour .descr {padding-left:210px;background:url('../images/medium/tour.png') left top no-repeat;left:-40px;width:calc(100% + 80px);box-sizing:border-box}
+	.production article.tour .descr:before {left:-80px;right:-80px;bottom:-50px;top:-95px}
+	
+	.goods {padding:100px 0 200px}
+	.goods h1 {font:72px/62px 'Poiret One', cursive;margin-bottom:90px}
+	.goods .picView {width:400px;height:450px;margin:0 auto 60px;padding:0 0 50px}
+	.goods .picView img {width:400px;height:400px}
+	.goods article {font:14px/26px 'Noto Serif', serif;background:url('../images/medium/light.png') center 50px no-repeat}
+	.goods article h2 {font:36px/42px 'Noto Serif', serif;margin-bottom:35px}
+	.goods article p {margin-bottom:45px}
+	.goods article .but {border-radius:0 0 15px 15px;color:#1c1a1b;height:58px;font:18px/58px 'Poiret One', cursive}
+	.goods article .mark {top:0;right:10px}
+	.goods .sender {margin-bottom:100px;padding:65px 100px}
+	.goods .sender:before {top:0;left:0;right:0;bottom:0}
+	.goods .sender .title, .events .sender .title {font:italic 700 30px/36px 'Noto Serif', serif;margin-bottom:40px}
+	
+	.events {padding-top:0}
+	.events:after, .rew:after {display:block;content:'';clear:both}
+	.events h1, .rew h1 {font:72px/62px 'Poiret One', cursive;margin-bottom:90px}
+	.events article {height:460px;box-sizing:border-box;width:50%;float:left}
+	.events article.notActive .descr {width:240px;height:240px;padding:20px;top:90px;margin-left:-140px}
+	.events article.notActive .descr h2, .events article.active .descr h2 {padding-top:90px}
+	.events article.video .descr, .events article.active .descr {padding:90px 40px}
+	.events article.active .descr {background:url('../images/medium/announce.svg') center no-repeat}
+	.events article.active .descr h2 {margin:0 auto 25px}
+	.events .sender {height:460px;padding:50px 40px;float:left;width:50%}
+	.events .sender .title {color:#000}
+	.events .sender  input {border-color:#d9d8c9;color:#999999}
+	.events .sender .but {color:#fff;margin-top:10px}
+	.events .sender .but:before {background:url('../images/small/mail2.png') center no-repeat}
+	
+	.rew {padding:100px 0 150px;font:24px/40px 'Noto Serif', serif}
+	.rew h1 {margin-bottom:90px}
+	.rew article {border-bottom:1px solid #3e3c3d;padding-bottom:55px;margin-bottom:70px}
+        .rew article img {width:200px;height:200px;}
+	.rew article p {margin-bottom:55px}
+	.rew article .video {padding:0 60px;margin-bottom:60px}
+	.rew article .autor {padding-left:100px;background:url('../images/medium/corner.png') left top no-repeat;margin:0 20px 0 120px}
+	.rew article .autor img {width:100px;height:100px;margin-right:30px}
+	.rew article p.name {color:#fff;font:700 24px/30px 'Noto Serif', serif;text-align:left;padding-top:20px}
+	.rew article p .name span {font:400 italic 16px/30px 'Noto Serif', serif}
+        //.rew article .autor .name {color:#fff;font:700 24px/30px 'Noto Serif', serif;text-align:left;padding-top:20px}
+	//.rew article .autor .name span {font:400 italic 16px/30px 'Noto Serif', serif}
+	.rew .partners .item {width:50%;float:left;box-sizing:border-box;padding:0 40px;font:16px/30px 'Noto Serif', serif}
+	
+	.backcall {padding:110px 0 140px}
+	.backcall .inblock {padding:0 160px}
+	.backcall p {margin-bottom:40px}
+	.backcall textarea {height:140px;min-height:140px}
+	.backcall .title {font:36px/36px 'Noto Serif', serif;margin-bottom:15px}
+	.backcall .but {margin:30px 30px 0 0;float:left}
+	.backcall .help {margin-top:45px}				
+			            
+    /* Footer
+    ------------------- */ 
+	.footer {padding:290px 0 0;background:url('../images/medium/footer.png') center top/cover no-repeat;position:relative}
+	.footer:after {top:290px;left:0;right:0;bottom:0;background:#d9d8c9;opacity:0.7;content:'';display:block;position:absolute}
+	.footer .inblock {padding:50px 160px;position:relative;z-index:2}
+	.footer .social {border-color:#a9aa9c}
+	.footer .cpr {margin:0;float:left}
+	.footer .mbc {float:right;text-align:right;width:100px}	    
+	.footer.small {position:relative;left:0;padding:30px 0} 
+	.footer.small:after {top:0;opacity:1}
+    
+    }
+    
+/* @media=1280px
+------------------- */
+@media screen and (min-width: 1280px) 
+    {
+    
+    /* Global
+    ------------------- */  
+    
+	/* forms
+	------------------- */
+	.but:hover {background:transparent;color:#bb8748}
+	
+    /* Header
+    ------------------- */   
+    .header {height:960px;position:absolute;z-index:7;top:0;left:0;right:0;}
+	/*.header {-webkit-animation:'opacity' 0.7s ease-in;-webkit-animation-fill-mode:forwards;}*/
+	.header .inblock {top:100px}
+
+	.header h1 {font:300 72px/60px 'Copperplate Gothic';width:900px;height:180px;position:absolute;top:50%;left:50%;margin:-140px 0 0 -450px;padding:0}
+	.header .help {font:24px/24px 'Poiret One', cursive;bottom:90px;right:120px;max-width:300px}
+	.header .help sup {top:14px;left:-14px}
+	.header .social {position:absolute;left:120px;bottom:90px;width:auto;text-align:left}
+	.header .more {bottom:200px;cursor:pointer}	
+	.header .more:hover:before, .header .social li:hover:before {background:#fff}
+   
+    /* Main
+    ------------------- */  
+	main .inblock {padding:0 120px;max-width:1000px;margin:0 auto}	
+	
+/*	.production {-webkit-animation:'opacity2' 0.7s ease-in;-webkit-animation-fill-mode:forwards;}*/	
+    .production .picture {height:480px;margin-bottom:90px;background:url('../images/medium/promo.png') center/cover no-repeat}
+	.production .picture h1 {position:absolute;width:1000px;left:50%;bottom:100px;margin-left:-500px}
+	.production .inblock {padding:0 120px}
+	.production article {padding-bottom:81px;margin-bottom:80px;text-align:center;overflow:hidden}
+	.production article:after {left:50%;margin-left:-45px}
+	.production article h2 {margin-bottom:80px;display:inline-block;padding:0 180px}
+	.production article img {margin:0;width:400px;float:right}
+	.production article .descr {text-align:right;margin-right:480px;overflow:hidden}
+	.production.tours article .descr {padding-top:0;font:24px/36px 'Noto Serif', serif}
+	.production article:nth-of-type(2n) img {float:left}
+	.production article:nth-of-type(2n) .descr {text-align:left;margin:0 0 0 480px}	
+	.production article .descr .standart {float:none;margin-bottom:30px}
+	.production article.tour h2 {width:auto;left:0;margin:0;padding:0}
+	.production article.tour .descr {left:0;width:100%;box-sizing:border-box;padding:120px 160px 60px 370px;background-position:160px 120px;top:-30px;text-align:left}
+	.production article.tour .descr:before {left:0;right:0;bottom:0;top:0}
+	
+	.goods .picView {margin:0;top:-50px;right:40px;position:absolute;z-index:2}
+	.goods .picView button:hover {opacity:0.5}
+	.goods .picView .slick-active button:hover {opacity:1}
+	.goods .descr {margin-right:560px;min-height:290px;overflow:hidden}
+	.goods div.size {padding-top:33px}
+	.goods article {background:url('../images/medium/light.png') right 40px no-repeat;text-align:left;position:relative;margin-bottom:200px}
+	.goods article:after {clear:both;display:block;content:''}
+	.goods article .but:hover {color:#bb8748}
+	.goods article .mark {right:0}
+	.goods article:nth-of-type(2n) {background:url('../images/medium/light.png') left 40px no-repeat;text-align:right}
+	.goods article:nth-of-type(2n) .picView {right:auto;left:40px}
+	.goods article:nth-of-type(2n) .descr {margin:0 0 0 560px;text-align:left}
+	.goods article:nth-of-type(2n) .mark {right:auto;left:0}
+	.goods .sender {width:550px;margin:0 auto 170px}
+	.goods .sender input[type="text"], .goods .sender input[type="email"] {width:360px;margin:0 auto}
+	.goods .sender .but:hover, .events .sender .but:hover {color:#bb8748}
+	.goods .sender .but:hover:before, .events .sender .but:hover:before {background-image:url('../images/large/mail_hover.png')}
+	
+	.events article {width:25%}
+	.events article.video:hover .descr .videoIcon {text-decoration:none}
+	.events article.active:hover .descr {background:url('../images/large/announce_hover.svg') center no-repeat}
+	.events article.active:hover .descr .but {background:transparent;color:#fff;opacity:0.8}
+	.events article.active:hover .descr .place, .events article.active:hover .descr .time {color:#000;opacity:1}
+	.events article.active:hover .descr .place {background-image:url('../images/large/mark_hover.png')}
+	.events article.active:hover .descr .time {background-image:url('../images/large/bell_hover.png')}
+	.events .sender {width:25%}
+	
+	.rew article {padding:0 0 75px 0;margin-bottom:120px;position:relative;text-align:left}
+        .rew article img {float:left;width:300px;height:300px;}
+	.rew article:after {display:block;content:'';clear:both}
+	.rew article p {margin-bottom:15px}
+	.rew article .descr {position:relative}
+	//.rew article .descr:before {width:10px;height:7px;top:0;left:-30px;position:absolute;content:'';display:block;background:url('../images/large/c.png') center no-repeat}
+	.rew article .video {padding:0;margin-bottom:0;width:330px}
+	.rew article .autor {padding-left:100px;background:url('../images/medium/corner.png') left top no-repeat;margin:0 0 0 -25px}
+	.rew article .autor img {width:400px;height:400px;margin:0;left:0;position:absolute;bottom:0;border-radius:0}
+	//.rew article:nth-of-type(2n) {padding:0 520px 75px 0;text-align:left}
+	//.rew article:nth-of-type(2n) .descr:before {left:auto;right:-30px}
+	//.rew article:nth-of-type(2n) .autor {padding:0 100px 0 0;background:url('../images/large/corner.png') right top no-repeat;margin:0 -25px 0 0;float:right}
+	//.rew article:nth-of-type(2n) .autor img {left:auto;right:0}
+	//.rew article:nth-of-type(2n) .autor .name {text-align:right}
+	//.rew .partners .item {padding:0 20px;text-align:left}	
+	//.rew .partners .item img {float:left;margin-right:20px}	
+	//.rew .partners .item p {overflow:hidden;padding-top:20px}
+	
+	.backcall {padding:120px 0;margin-right:45%;overflow:hidden;height:620px}
+	.backcall .inblock {padding:0 125px 0 0;float:right;width:450px}
+				                        
+    /* Footer
+    ------------------- */      
+    .footer {position:absolute;bottom:0;right:0;left:55%;}
+	.footer .inblock {padding:50px 0 50px 25px;position:relative;z-index:2;width:400px;height:470px}
+	.footer .social li:hover {opacity:0.5}
+	.footer a:hover {text-decoration:none}    
+	.footer.small .inblock {padding:0 120px;max-width:1000px;margin:0 auto;width:auto;height:auto}
+	.footer.small address {float:left;width:28%}
+	.footer.small .social {float:right;width:16%;margin:0;border:none}
+	.footer.small .social li {float:right;margin:0 0 0 10px}
+	.footer.small .clear {border-top:1px solid #B9B9AC;padding-bottom:30px}
+	
+    }
+    
+    /* @media=768px
+------------------- */
+@media screen and (max-width: 768px) 
+{
+    .rew article img {width:200px;height:200px;padding-bottom:25px}
+}

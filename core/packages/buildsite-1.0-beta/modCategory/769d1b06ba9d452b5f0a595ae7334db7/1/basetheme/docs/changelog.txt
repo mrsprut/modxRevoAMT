@@ -1,0 +1,33 @@
+Changelog for baseTheme.
+
+baseTheme 1.2.0
+==============
+- add _buildSite: builder for resource and elements for site
+- нужно добавить гит игнор и самплы для файлов конфига
+
+baseTheme 1.1.2
+==============
+- fix js error designUrl
+
+baseTheme 1.1.1
+==============
+- add phpthumb settings for optimaze speed (phpthumb_cache_maxage=0, phpthumb_cache_maxfiles=0, phpthumb_cache_maxsize=0,)
+- remove demo resources
+- remove list template and chunks
+- update base chunks
+- update lexicon
+- add plugin clearCashe
+- related resource from settings
+- add settingsresourcedependence resolver
+
+baseTheme 1.0.1
+==============
+- add humans.txt.
+- update packages (molt, pdotools, tickets)
+- update baseMeta.tpl
+- add APP js
+- add more snippets
+
+baseTheme 1.0.0
+==============
+- Initial release.

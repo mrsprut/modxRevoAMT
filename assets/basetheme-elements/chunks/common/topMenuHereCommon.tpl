@@ -1,0 +1,1 @@
+<li class="[[+classnames]]"><a href="#" onclick="return false;" [[+attributes]]>[[+menutitle:htmlent]]</a></li>

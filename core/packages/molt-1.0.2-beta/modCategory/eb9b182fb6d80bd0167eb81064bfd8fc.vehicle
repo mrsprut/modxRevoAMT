@@ -1,0 +1,90 @@
+<?php return array (
+  'unique_key' => 'category',
+  'preserve_keys' => false,
+  'update_object' => true,
+  'related_objects' => 
+  array (
+    'Chunks' => 
+    array (
+      '6b1bbb386085d2c0768bf5156acf98d6' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'name',
+        'class' => 'modChunk',
+        'object' => '{"id":0,"source":1,"property_preprocess":0,"name":"moltVar","description":"","editor_type":0,"category":0,"cache_type":0,"snippet":"<script>\\r\\n\\tvar global = {\\r\\n\\t\\tsiteUrl: \'[[++site_url]]\',\\r\\n\\t\\tbaseUrl: \'[[++base_url]]\',\\r\\n\\t\\tassetsUrl: \'[[++assets_url]]\',\\r\\n\\t\\tcultureKey: \'[[++cultureKey]]\'\\r\\n\\t}\\r\\n\\t[[+jsDeferred:is=`1`:then=`\\r\\n\\t\\tvar jsDeferred = {\\r\\n\\t\\t\\tminJs: \'[[+jsUrl]]\'\\r\\n\\t\\t}\\r\\n\\t`:else=``]]\\r\\n\\t[[+cssDeferred:is=`1`:then=`\\r\\n\\t\\tvar cssDeferred = {\\r\\n\\t\\t\\tminCss: \'[[+cssUrl]]\'\\r\\n\\t\\t}\\r\\n\\t`:else=``]]\\r\\n<\\/script>","locked":0,"properties":null,"static":0,"static_file":"core\\/components\\/molt\\/elements\\/chunks\\/chunk.moltVar.tpl","content":"<script>\\r\\n\\tvar global = {\\r\\n\\t\\tsiteUrl: \'[[++site_url]]\',\\r\\n\\t\\tbaseUrl: \'[[++base_url]]\',\\r\\n\\t\\tassetsUrl: \'[[++assets_url]]\',\\r\\n\\t\\tcultureKey: \'[[++cultureKey]]\'\\r\\n\\t}\\r\\n\\t[[+jsDeferred:is=`1`:then=`\\r\\n\\t\\tvar jsDeferred = {\\r\\n\\t\\t\\tminJs: \'[[+jsUrl]]\'\\r\\n\\t\\t}\\r\\n\\t`:else=``]]\\r\\n\\t[[+cssDeferred:is=`1`:then=`\\r\\n\\t\\tvar cssDeferred = {\\r\\n\\t\\t\\tminCss: \'[[+cssUrl]]\'\\r\\n\\t\\t}\\r\\n\\t`:else=``]]\\r\\n<\\/script>"}',
+        'guid' => '538e660802b66b1d7ea9eeeeda81f44f',
+        'native_key' => 0,
+        'signature' => 'a2787da9fda88a0c63fe114341e47616',
+      ),
+    ),
+    'Snippets' => 
+    array (
+      '18657d37b56e80b5a777b7b04363bba3' => 
+      array (
+        'preserve_keys' => false,
+        'update_object' => true,
+        'unique_key' => 'name',
+        'class' => 'modSnippet',
+        'object' => '{"id":0,"source":1,"property_preprocess":0,"name":"molt","description":"","editor_type":0,"category":0,"cache_type":0,"snippet":"\\/**\\n * molt\\n *\\n * A minimization js\\/css and optimization of load time snippet for MODX 2.x.\\n *\\n * @copyright Copyright (C) 2014, MakeBeCool <developers@makebecool.com>\\n * @author Gadashevich Andrei <gav.andrei@makebecool.com>\\n * @package Molt\\n *\\n * TEMPLATES\\n *\\n * tpl - Template with basic variables JS [default=moltVar]\\n *\\n * OPTIONS\\n *\\n * cacheFolder - (Opt) The folder to the cache files from the site base URL\\n * cssFilename - (Opt) Base name for the CSS file [default=styles]\\n * cssSources - (Opt) List of comma-separated CSS files to be processed\\n * cssPack - (Opt) Enable Minification CSS? [default=true]\\n * cssDeferred - (Opt) Lazy loading CSS file after loading the page [default=false]\\n * cssPlaceholder - (Opt) Name placeholder css. Used if &registerCss=`placeholder` [default=Molt.css]\\n * cssRegister - (Opt) Connection CSS : You can save the placeholder (placeholder) or cause the tag \\"head\\" (default)\\n * [default=default]\\n * jsFilename - (opt) Base name for the JS file [default=scripts]\\n * jsSources - (Opt) List of comma-separated JS files to be processed\\n * jsPack - (Opt) Enable Minification JS [default=true]\\n * jsDeferred - (Opt) Lazy loading JS file after loading the page [default=true]\\n * jsPlaceholder - (Opt) Name placeholder javascript. Used if &registerJs=`placeholder` [default=Molt.js]\\n * jsRegister - (Opt) Connection javascript: You can save the placeholder (placeholder), cause the tag \\"head\\" (startup)\\n * or put before the closing \\"body\\" (default) [default=default]\\n * incjQuery - (Opt) Separately connect the jQuery library from the CDN [default=true]\\n *\\n *\\/\\n\\n\\/** @var array $scriptProperties *\\/\\nif (!$modx->getService(\'molt\',\'Molt\',$modx->getOption(\'molt_core_path\',null,$modx->getOption(\'core_path\').\'components\\/molt\\/\').\'model\\/molt\\/\',$scriptProperties)) {return;}\\n\\/** @var Molt $Molt *\\/\\nif (!$Molt = new Molt($modx, $scriptProperties)) {\\n    return;\\n}\\n\\n$files = $Molt->minify();\\n\\n\\/\\/CSS\\n$cssRegister = $Molt->config[\'cssRegister\'];\\n$cssPlaceholder = !empty($Molt->config[\'cssPlaceholder\']) ? $Molt->config[\'cssPlaceholder\'] : \'\';\\nif($cssRegister == \'placeholder\' && $cssPlaceholder) {\\n    $tag = \'<link rel=\\"stylesheet\\" href=\\"\' . $files[\'css\'] . \'\\" type=\\"text\\/css\\" \\/>\';\\n    $modx->setPlaceholder($cssPlaceholder, $tag);\\n} elseif($cssRegister == \'head\' || !$Molt->config[\'cssDeferred\']) {\\n    $modx->regClientCSS($files[\'css\']);\\n}\\n\\n\\/\\/JS\\n$jsRegister = $Molt->config[\'jsRegister\'];\\n$jsPlaceholder = !empty($Molt->config[\'jsPlaceholder\']) ? $Molt->config[\'jsPlaceholder\'] : \'\';\\n\\n$properties = array(\\n    \'jsDeferred\' => $Molt->config[\'jsDeferred\'] ? 1 : 0\\n    ,\'cssDeferred\' => $Molt->config[\'cssDeferred\'] ? 1 : 0\\n    ,\'jsUrl\' => $files[\'js\']\\n    ,\'cssUrl\' => $files[\'css\']\\n);\\n$deferred = ($Molt->config[\'jsDeferred\'] || $Molt->config[\'cssDeferred\']) ? 1 : 0;\\n$jsVar = $modx->getChunk($Molt->config[\'tpl\'],$properties);\\n\\nif($jsRegister == \'placeholder\' && $jsPlaceholder) {\\n    $tag = \'<script src=\\"\' . $files[\'js\'] . \'\\"><\\/script>\';\\n    $modx->setPlaceholder($cssPlaceholder, $tag);\\n} elseif($jsRegister == \'startup\') {\\n    $modx->regClientStartupHTMLBlock($jsVar);\\n    if($Molt->config[\'incjQuery\']) {\\n        $modx->regClientStartupScript(\'\\/\\/code.jquery.com\\/jquery-1.11.0.min.js\');\\n    }\\n    if($deferred) {\\n        $modx->regClientStartupScript($Molt->config[\'deferredfunctions\']);\\n    } else {\\n        $modx->regClientStartupScript($files[\'js\']);\\n    }\\n} else {\\n    $modx->regClientHTMLBlock($jsVar);\\n    if($Molt->config[\'incjQuery\']) {\\n        $modx->regClientScript(\'\\/\\/code.jquery.com\\/jquery-1.11.0.min.js\');\\n    }\\n    if($deferred) {\\n        $modx->regClientScript($Molt->config[\'deferredfunctions\']);\\n    } else {\\n        $modx->regClientScript($files[\'js\']);\\n    }\\n}","locked":0,"properties":"a:14:{s:3:\\"tpl\\";a:7:{s:4:\\"name\\";s:3:\\"tpl\\";s:4:\\"desc\\";s:13:\\"molt_prop_tpl\\";s:4:\\"type\\";s:9:\\"textfield\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";s:7:\\"moltVar\\";s:7:\\"lexicon\\";s:15:\\"molt:properties\\";s:4:\\"area\\";s:0:\\"\\";}s:11:\\"cssFilename\\";a:7:{s:4:\\"name\\";s:11:\\"cssFilename\\";s:4:\\"desc\\";s:21:\\"molt_prop_cssFilename\\";s:4:\\"type\\";s:9:\\"textfield\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";s:6:\\"styles\\";s:7:\\"lexicon\\";s:15:\\"molt:properties\\";s:4:\\"area\\";s:0:\\"\\";}s:10:\\"cssSources\\";a:7:{s:4:\\"name\\";s:10:\\"cssSources\\";s:4:\\"desc\\";s:20:\\"molt_prop_cssSources\\";s:4:\\"type\\";s:9:\\"textfield\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";s:0:\\"\\";s:7:\\"lexicon\\";s:15:\\"molt:properties\\";s:4:\\"area\\";s:0:\\"\\";}s:7:\\"cssPack\\";a:7:{s:4:\\"name\\";s:7:\\"cssPack\\";s:4:\\"desc\\";s:17:\\"molt_prop_cssPack\\";s:4:\\"type\\";s:13:\\"combo-boolean\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";b:1;s:7:\\"lexicon\\";s:15:\\"molt:properties\\";s:4:\\"area\\";s:0:\\"\\";}s:11:\\"cssDeferred\\";a:7:{s:4:\\"name\\";s:11:\\"cssDeferred\\";s:4:\\"desc\\";s:21:\\"molt_prop_cssDeferred\\";s:4:\\"type\\";s:13:\\"combo-boolean\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";b:0;s:7:\\"lexicon\\";s:15:\\"molt:properties\\";s:4:\\"area\\";s:0:\\"\\";}s:14:\\"cssPlaceholder\\";a:7:{s:4:\\"name\\";s:14:\\"cssPlaceholder\\";s:4:\\"desc\\";s:24:\\"molt_prop_cssPlaceholder\\";s:4:\\"type\\";s:9:\\"textfield\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";s:8:\\"Molt.css\\";s:7:\\"lexicon\\";s:15:\\"molt:properties\\";s:4:\\"area\\";s:0:\\"\\";}s:11:\\"cssRegister\\";a:7:{s:4:\\"name\\";s:11:\\"cssRegister\\";s:4:\\"desc\\";s:21:\\"molt_prop_cssRegister\\";s:4:\\"type\\";s:4:\\"list\\";s:7:\\"options\\";a:3:{i:0;a:2:{s:5:\\"value\\";s:11:\\"placeholder\\";s:4:\\"text\\";s:11:\\"Placeholder\\";}i:1;a:2:{s:5:\\"value\\";s:4:\\"head\\";s:4:\\"text\\";s:7:\\"In head\\";}i:2;a:2:{s:5:\\"value\\";s:7:\\"default\\";s:4:\\"text\\";s:7:\\"Default\\";}}s:5:\\"value\\";s:7:\\"default\\";s:7:\\"lexicon\\";s:15:\\"molt:properties\\";s:4:\\"area\\";s:0:\\"\\";}s:10:\\"jsFilename\\";a:7:{s:4:\\"name\\";s:10:\\"jsFilename\\";s:4:\\"desc\\";s:20:\\"molt_prop_jsFilename\\";s:4:\\"type\\";s:9:\\"textfield\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";s:7:\\"scripts\\";s:7:\\"lexicon\\";s:15:\\"molt:properties\\";s:4:\\"area\\";s:0:\\"\\";}s:9:\\"jsSources\\";a:7:{s:4:\\"name\\";s:9:\\"jsSources\\";s:4:\\"desc\\";s:19:\\"molt_prop_jsSources\\";s:4:\\"type\\";s:9:\\"textfield\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";s:0:\\"\\";s:7:\\"lexicon\\";s:15:\\"molt:properties\\";s:4:\\"area\\";s:0:\\"\\";}s:6:\\"jsPack\\";a:7:{s:4:\\"name\\";s:6:\\"jsPack\\";s:4:\\"desc\\";s:16:\\"molt_prop_jsPack\\";s:4:\\"type\\";s:13:\\"combo-boolean\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";b:1;s:7:\\"lexicon\\";s:15:\\"molt:properties\\";s:4:\\"area\\";s:0:\\"\\";}s:10:\\"jsDeferred\\";a:7:{s:4:\\"name\\";s:10:\\"jsDeferred\\";s:4:\\"desc\\";s:20:\\"molt_prop_jsDeferred\\";s:4:\\"type\\";s:13:\\"combo-boolean\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";b:1;s:7:\\"lexicon\\";s:15:\\"molt:properties\\";s:4:\\"area\\";s:0:\\"\\";}s:13:\\"jsPlaceholder\\";a:7:{s:4:\\"name\\";s:13:\\"jsPlaceholder\\";s:4:\\"desc\\";s:23:\\"molt_prop_jsPlaceholder\\";s:4:\\"type\\";s:9:\\"textfield\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";s:7:\\"Molt.js\\";s:7:\\"lexicon\\";s:15:\\"molt:properties\\";s:4:\\"area\\";s:0:\\"\\";}s:10:\\"jsRegister\\";a:7:{s:4:\\"name\\";s:10:\\"jsRegister\\";s:4:\\"desc\\";s:20:\\"molt_prop_jsRegister\\";s:4:\\"type\\";s:4:\\"list\\";s:7:\\"options\\";a:3:{i:0;a:2:{s:5:\\"value\\";s:11:\\"placeholder\\";s:4:\\"text\\";s:11:\\"Placeholder\\";}i:1;a:2:{s:5:\\"value\\";s:7:\\"startup\\";s:4:\\"text\\";s:14:\\"Startup script\\";}i:2;a:2:{s:5:\\"value\\";s:7:\\"default\\";s:4:\\"text\\";s:7:\\"Default\\";}}s:5:\\"value\\";s:7:\\"default\\";s:7:\\"lexicon\\";s:15:\\"molt:properties\\";s:4:\\"area\\";s:0:\\"\\";}s:9:\\"incjQuery\\";a:7:{s:4:\\"name\\";s:9:\\"incjQuery\\";s:4:\\"desc\\";s:19:\\"molt_prop_incjQuery\\";s:4:\\"type\\";s:13:\\"combo-boolean\\";s:7:\\"options\\";a:0:{}s:5:\\"value\\";b:1;s:7:\\"lexicon\\";s:15:\\"molt:properties\\";s:4:\\"area\\";s:0:\\"\\";}}","moduleguid":"","static":0,"static_file":"core\\/components\\/molt\\/elements\\/snippets\\/snippet.molt.php","content":"\\/**\\n * molt\\n *\\n * A minimization js\\/css and optimization of load time snippet for MODX 2.x.\\n *\\n * @copyright Copyright (C) 2014, MakeBeCool <developers@makebecool.com>\\n * @author Gadashevich Andrei <gav.andrei@makebecool.com>\\n * @package Molt\\n *\\n * TEMPLATES\\n *\\n * tpl - Template with basic variables JS [default=moltVar]\\n *\\n * OPTIONS\\n *\\n * cacheFolder - (Opt) The folder to the cache files from the site base URL\\n * cssFilename - (Opt) Base name for the CSS file [default=styles]\\n * cssSources - (Opt) List of comma-separated CSS files to be processed\\n * cssPack - (Opt) Enable Minification CSS? [default=true]\\n * cssDeferred - (Opt) Lazy loading CSS file after loading the page [default=false]\\n * cssPlaceholder - (Opt) Name placeholder css. Used if &registerCss=`placeholder` [default=Molt.css]\\n * cssRegister - (Opt) Connection CSS : You can save the placeholder (placeholder) or cause the tag \\"head\\" (default)\\n * [default=default]\\n * jsFilename - (opt) Base name for the JS file [default=scripts]\\n * jsSources - (Opt) List of comma-separated JS files to be processed\\n * jsPack - (Opt) Enable Minification JS [default=true]\\n * jsDeferred - (Opt) Lazy loading JS file after loading the page [default=true]\\n * jsPlaceholder - (Opt) Name placeholder javascript. Used if &registerJs=`placeholder` [default=Molt.js]\\n * jsRegister - (Opt) Connection javascript: You can save the placeholder (placeholder), cause the tag \\"head\\" (startup)\\n * or put before the closing \\"body\\" (default) [default=default]\\n * incjQuery - (Opt) Separately connect the jQuery library from the CDN [default=true]\\n *\\n *\\/\\n\\n\\/** @var array $scriptProperties *\\/\\nif (!$modx->getService(\'molt\',\'Molt\',$modx->getOption(\'molt_core_path\',null,$modx->getOption(\'core_path\').\'components\\/molt\\/\').\'model\\/molt\\/\',$scriptProperties)) {return;}\\n\\/** @var Molt $Molt *\\/\\nif (!$Molt = new Molt($modx, $scriptProperties)) {\\n    return;\\n}\\n\\n$files = $Molt->minify();\\n\\n\\/\\/CSS\\n$cssRegister = $Molt->config[\'cssRegister\'];\\n$cssPlaceholder = !empty($Molt->config[\'cssPlaceholder\']) ? $Molt->config[\'cssPlaceholder\'] : \'\';\\nif($cssRegister == \'placeholder\' && $cssPlaceholder) {\\n    $tag = \'<link rel=\\"stylesheet\\" href=\\"\' . $files[\'css\'] . \'\\" type=\\"text\\/css\\" \\/>\';\\n    $modx->setPlaceholder($cssPlaceholder, $tag);\\n} elseif($cssRegister == \'head\' || !$Molt->config[\'cssDeferred\']) {\\n    $modx->regClientCSS($files[\'css\']);\\n}\\n\\n\\/\\/JS\\n$jsRegister = $Molt->config[\'jsRegister\'];\\n$jsPlaceholder = !empty($Molt->config[\'jsPlaceholder\']) ? $Molt->config[\'jsPlaceholder\'] : \'\';\\n\\n$properties = array(\\n    \'jsDeferred\' => $Molt->config[\'jsDeferred\'] ? 1 : 0\\n    ,\'cssDeferred\' => $Molt->config[\'cssDeferred\'] ? 1 : 0\\n    ,\'jsUrl\' => $files[\'js\']\\n    ,\'cssUrl\' => $files[\'css\']\\n);\\n$deferred = ($Molt->config[\'jsDeferred\'] || $Molt->config[\'cssDeferred\']) ? 1 : 0;\\n$jsVar = $modx->getChunk($Molt->config[\'tpl\'],$properties);\\n\\nif($jsRegister == \'placeholder\' && $jsPlaceholder) {\\n    $tag = \'<script src=\\"\' . $files[\'js\'] . \'\\"><\\/script>\';\\n    $modx->setPlaceholder($cssPlaceholder, $tag);\\n} elseif($jsRegister == \'startup\') {\\n    $modx->regClientStartupHTMLBlock($jsVar);\\n    if($Molt->config[\'incjQuery\']) {\\n        $modx->regClientStartupScript(\'\\/\\/code.jquery.com\\/jquery-1.11.0.min.js\');\\n    }\\n    if($deferred) {\\n        $modx->regClientStartupScript($Molt->config[\'deferredfunctions\']);\\n    } else {\\n        $modx->regClientStartupScript($files[\'js\']);\\n    }\\n} else {\\n    $modx->regClientHTMLBlock($jsVar);\\n    if($Molt->config[\'incjQuery\']) {\\n        $modx->regClientScript(\'\\/\\/code.jquery.com\\/jquery-1.11.0.min.js\');\\n    }\\n    if($deferred) {\\n        $modx->regClientScript($Molt->config[\'deferredfunctions\']);\\n    } else {\\n        $modx->regClientScript($files[\'js\']);\\n    }\\n}"}',
+        'guid' => '851eee8f3ea20e8807f1284e645887d2',
+        'native_key' => 0,
+        'signature' => '2c49bc161c969d40872f9f797d62745b',
+      ),
+    ),
+  ),
+  'related_object_attributes' => 
+  array (
+    'Snippets' => 
+    array (
+      'preserve_keys' => false,
+      'update_object' => true,
+      'unique_key' => 'name',
+    ),
+    'Chunks' => 
+    array (
+      'preserve_keys' => false,
+      'update_object' => true,
+      'unique_key' => 'name',
+    ),
+    'Plugins' => 
+    array (
+      'preserve_keys' => false,
+      'update_object' => false,
+      'unique_key' => 'name',
+    ),
+    'PluginEvents' => 
+    array (
+      'preserve_keys' => true,
+      'update_object' => false,
+      'unique_key' => 
+      array (
+        0 => 'pluginid',
+        1 => 'event',
+      ),
+    ),
+  ),
+  'namespace' => 'molt',
+  'resolve' => 
+  array (
+    0 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"molt-1.0.2-beta\\/modCategory\\/eb9b182fb6d80bd0167eb81064bfd8fc\\/0\\/","target":"return MODX_ASSETS_PATH . \'components\\/\';","name":"molt"}',
+    ),
+    1 => 
+    array (
+      'type' => 'file',
+      'body' => '{"source":"molt-1.0.2-beta\\/modCategory\\/eb9b182fb6d80bd0167eb81064bfd8fc\\/1\\/","target":"return MODX_CORE_PATH . \'components\\/\';","name":"molt"}',
+    ),
+  ),
+  'validate' => NULL,
+  'vehicle_package' => 'transport',
+  'vehicle_class' => 'xPDOObjectVehicle',
+  'guid' => 'c0c98b8a0a58a2e1699b8114dc191cb4',
+  'package' => 'modx',
+  'class' => 'modCategory',
+  'signature' => 'eb9b182fb6d80bd0167eb81064bfd8fc',
+  'native_key' => NULL,
+  'object' => '{"id":null,"parent":0,"category":"molt"}',
+);

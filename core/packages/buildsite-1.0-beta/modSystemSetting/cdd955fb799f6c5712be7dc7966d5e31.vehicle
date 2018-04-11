@@ -1,0 +1,15 @@
+<?php return array (
+  'unique_key' => 'key',
+  'preserve_keys' => true,
+  'update_object' => true,
+  'resolve' => NULL,
+  'validate' => NULL,
+  'vehicle_package' => 'transport',
+  'vehicle_class' => 'xPDOObjectVehicle',
+  'guid' => 'b2862036d97f3e2682cddb8668e25119',
+  'package' => 'modx',
+  'class' => 'modSystemSetting',
+  'signature' => 'cdd955fb799f6c5712be7dc7966d5e31',
+  'native_key' => 'basetheme.event',
+  'object' => '{"key":"basetheme.event","value":"","xtype":"numberfield","namespace":"basetheme","area":"basetheme_resources","editedon":null}',
+);

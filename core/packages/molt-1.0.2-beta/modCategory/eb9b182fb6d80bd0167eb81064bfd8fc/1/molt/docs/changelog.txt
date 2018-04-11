@@ -1,0 +1,13 @@
+Changelog for molt.
+
+molt 1.0.2
+==============
+- Fix regexp on getCachedFiles function in molt class
+
+molt 1.0.1
+==============
+- Fix situation when the installation is in a subdirectory.
+
+molt 1.0.0
+==============
+- Initial release.

@@ -1,0 +1,16 @@
+<?php return array (
+  'unique_key' => 'key',
+  'preserve_keys' => true,
+  'update_object' => true,
+  'namespace' => 'basetheme',
+  'resolve' => NULL,
+  'validate' => NULL,
+  'vehicle_package' => 'transport',
+  'vehicle_class' => 'xPDOObjectVehicle',
+  'guid' => 'e5886a1b428a1e8466c2356cec740346',
+  'package' => 'modx',
+  'class' => 'modSystemSetting',
+  'signature' => 'bf5198a52aa9e32c533e549295cc4b57',
+  'native_key' => 'basetheme.ga_tracking_name',
+  'object' => '{"key":"basetheme.ga_tracking_name","value":"auto","xtype":"textfield","namespace":"basetheme","area":"basetheme_main","editedon":null}',
+);

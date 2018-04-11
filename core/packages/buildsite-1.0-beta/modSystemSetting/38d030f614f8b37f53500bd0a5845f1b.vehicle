@@ -1,0 +1,15 @@
+<?php return array (
+  'unique_key' => 'key',
+  'preserve_keys' => true,
+  'update_object' => true,
+  'resolve' => NULL,
+  'validate' => NULL,
+  'vehicle_package' => 'transport',
+  'vehicle_class' => 'xPDOObjectVehicle',
+  'guid' => 'da52156aef652e13b53c2a7c68cd9bba',
+  'package' => 'modx',
+  'class' => 'modSystemSetting',
+  'signature' => '38d030f614f8b37f53500bd0a5845f1b',
+  'native_key' => 'basetheme.tours',
+  'object' => '{"key":"basetheme.tours","value":"","xtype":"numberfield","namespace":"basetheme","area":"basetheme_resources","editedon":null}',
+);

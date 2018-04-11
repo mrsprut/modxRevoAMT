@@ -1,0 +1,4 @@
+[2018-04-11 10:20:58] (ERROR @ /index.php) `` is not a valid integer and may not be passed to makeUrl()
+[2018-04-11 10:20:58] (ERROR @ /index.php) Attempted to redirect to an empty URL.
+[2018-04-11 10:20:58] (ERROR @ /index.php) `` is not a valid integer and may not be passed to makeUrl()
+[2018-04-11 10:20:58] (ERROR @ /index.php) Attempted to redirect to an empty URL.

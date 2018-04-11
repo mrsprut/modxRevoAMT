@@ -1,0 +1,16 @@
+<?php return array (
+  'unique_key' => 'key',
+  'preserve_keys' => true,
+  'update_object' => true,
+  'namespace' => 'basetheme',
+  'resolve' => NULL,
+  'validate' => NULL,
+  'vehicle_package' => 'transport',
+  'vehicle_class' => 'xPDOObjectVehicle',
+  'guid' => 'c56233b4e47f74e09a984aa5c58d40ac',
+  'package' => 'modx',
+  'class' => 'modSystemSetting',
+  'signature' => '79b669669677e5f96a79bb43ffa21409',
+  'native_key' => 'basetheme.unisender_list_ids',
+  'object' => '{"key":"basetheme.unisender_list_ids","value":"","xtype":"textfield","namespace":"basetheme","area":"basetheme_subscribe","editedon":null}',
+);
